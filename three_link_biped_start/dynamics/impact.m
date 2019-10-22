@@ -13,7 +13,6 @@ A_p = eval_A_p(q_p);
 
 b = A_m*dq_m;
 dq_p = A_p\b;
-
 % A_p dq_p = A_m dq_m
 % Note: To solve the equation Ax = b you could use x = A \ b to avoid taking
 % inverse of A. 
