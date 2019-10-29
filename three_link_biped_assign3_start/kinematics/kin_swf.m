@@ -1,3 +1,4 @@
+
 function [x_swf, z_swf, dx_swf, dz_swf] = kin_swf(q, dq)
 
 if nargin == 1

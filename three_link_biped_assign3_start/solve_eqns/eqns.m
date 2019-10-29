@@ -6,12 +6,19 @@ n = 6;
 q = y(1:n/2);
 dq = y(n/2+1:n);
 
+
 u = control(q, dq); % for the moment we set the control outputs to zero
 
+<<<<<<< Updated upstream
  
+=======
+n = 6;
+>>>>>>> Stashed changes
 dy = zeros(n, 1);
 
 % write down the equations for dy:
+dy(1:n/2) = diff(y(:,1),t) 
+dy(n/2+1:n) = diff(y(:,2),t) 
 
 M = eval_M(q);
 G = eval_G(q);
