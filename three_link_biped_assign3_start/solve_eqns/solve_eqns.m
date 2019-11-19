@@ -32,7 +32,6 @@ sln.YE = {};
 
 
 for i = 1:num_steps
-<<<<<<< Updated upstream
 
    [T, Y, TE, YE] = ode45(@eqns,tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
    sln.T{i} = T;
@@ -43,16 +42,7 @@ for i = 1:num_steps
    if T(end) == tmax
          break
    end
-=======
-    [T, Y, TE, YE] = ode45(@(t,y)eqns,tspan,y0,opts) % use ode45 to solve the equations of motion (eqns.m)
-   % sln.T{i} = 
-   % sln.Y{i} = 
-   % sln.TE{i} = 
-   % sln.YE{i} = 
-    if T(end) == tmax
-        break
-    end
->>>>>>> Stashed changes
+
     
     % Impact map
     

@@ -8,18 +8,11 @@
 
 function sln = solve_eqns(q0, dq0, num_steps)
 
-opts = odeset('RelTol',1e-5,'Events',@event_func);
 h = 0.001; % time step
 tmax = 2; % max time that we allow for a single step
-%%<<<<<<< Updated upstream
-tspan = 0:h:tmax; % from 0 to tmax with time step h
-y0 = [q0; dq0];
-%%=======
-%%>>>>>>> Stashed changes
 t0 = 0;
-tspan = t0:h:tmax% from 0 to tmax with time step h
+tspan = t0:h:tmax; % from 0 to tmax with time step h
 y0 = [q0; dq0];
-
 
 opts = odeset('RelTol', 1e-5, 'Events', @event_func);
 
@@ -32,7 +25,6 @@ sln.YE = {};
 
 
 for i = 1:num_steps
-<<<<<<< Updated upstream
 
    [T, Y, TE, YE] = ode45(@eqns,tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
    sln.T{i} = T;
@@ -43,16 +35,6 @@ for i = 1:num_steps
    if T(end) == tmax
          break
    end
-=======
-    [T, Y, TE, YE] = ode45(@(t,y)eqns,tspan,y0,opts) % use ode45 to solve the equations of motion (eqns.m)
-   % sln.T{i} = 
-   % sln.Y{i} = 
-   % sln.TE{i} = 
-   % sln.YE{i} = 
-    if T(end) == tmax
-        break
-    end
->>>>>>> Stashed changes
     
     % Impact map
     
@@ -61,8 +43,8 @@ for i = 1:num_steps
     tspan = t0:h:tmax;
     
     
-    [q0,dq0] = impact(YE(1:3)', YE(4:6)');
-    y0 = [q0;dq0];
+     [q0,dq0] = impact(YE(1:3)', YE(4:6)');
+     y0 = [q0;dq0];
     
    
 end
