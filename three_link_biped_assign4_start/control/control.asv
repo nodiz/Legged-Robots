@@ -7,7 +7,6 @@ u = zeros(2,1);
 
 [Kp,Kd,q3_des,dq3_des] = control_hyper_parameters;
 
-u(1) = -Kp*(q3_des-q(3))+Kd*(dq3_des - dq(3));
-disp(u(1))
+u(1) = pi + q(1)  - (Kp*(q3_des-q(3))+Kd*(dq3_des - dq(3)));%+ q(1)
 
 end
