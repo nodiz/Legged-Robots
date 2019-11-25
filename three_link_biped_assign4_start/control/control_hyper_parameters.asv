@@ -4,10 +4,15 @@
 function [Kd,Kp,q_des,dq_des, spread] = control_hyper_parameters(q,dq) %step_number)
 spread = 30/360*2*pi;
 
+%solve optimisation problem for Kd and Kp
+prob = optimprob('Walking', 'maximize');
+x = optimvar('K',2,2,'LowerBound',0);
 
 
-Kd = [0.1,0.1];
-Kp = [500,50];
+prob.Objective = x(1) + 2*x(2);
+%End optimization
+Kd = [0.1,0];
+Kp = [50,5000];
 
 
 q_des = [pi/6, -pi/6, pi/12] ;

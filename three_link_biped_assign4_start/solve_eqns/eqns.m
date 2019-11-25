@@ -5,7 +5,7 @@ n = 6;
 q = y(1:n/2);
 dq = y(n/2+1:n);
 
-u = control(q, dq); % for the moment we set the control outputs to zero
+u = control2(q, dq); % for the moment we set the control outputs to zero
 dy = zeros(n, 1);
 
 % write down the equations for dy:
