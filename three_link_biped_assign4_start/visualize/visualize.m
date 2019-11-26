@@ -57,4 +57,5 @@ function visualize(q, r0)
     hold on
     plot(x2, z2, '.', 'markersize', mz); 
     plot(x3, z3, '.', 'markersize', mz);
+    %title(['U2 is ', num2str(u(2))]);
 end

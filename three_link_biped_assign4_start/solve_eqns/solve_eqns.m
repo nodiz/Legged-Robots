@@ -1,4 +1,4 @@
-%% Solve equations of motion 
+        %% Solve equations of motion 
 % Note: eqns.m defines the equations of motion to be solved by this script
 % This function returns the time vector T, the solution Y, the event time
 % TE, solution at the event time YE.

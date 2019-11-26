@@ -13,12 +13,12 @@ t_current = mod(t,1/freq);
 spread_c = q(1)-q(2);
 
 %error_spread = spread_c - spread_t*(-1+2*t_current*freq);
-error_spread = - q(2) + q(1) + spread_t;
+error_spread = -q(2)+q(1)+spread_t;
 error_d_spread = -dq(2)-dq(1);
 error_d_spread = min(5,error_d_spread);
 
 u(1) = Kp(1)*(error_torso) + Kd(1)*(-dq_des(3) + dq(3));
-u(2) = Kp(2)*(error_spread); % Kd(2)*error_d_spread;
+u(2) = Kp(2)*(error_spread) + Kd(2)*error_d_spread;
 % u(2) = Kp(2)*(-q(2)+q(1)+spread) + Kd(2)*(dq_des(2)-dq(2) + dq_des(1)-dq(1));
 
 end
