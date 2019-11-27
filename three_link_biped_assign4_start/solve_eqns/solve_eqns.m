@@ -46,11 +46,11 @@ for i = 1:num_steps
     tspan = t0:h:tmax;
     
     [q0,dq0] = impact(YE(1:3)', YE(4:6)');
-    y0 = [q0;dq0];
+     y0 = [q0;dq0];
     
 %     if x_swf > 0
 %         [q0,dq0] = impact(YE(1:3)', YE(4:6)');
-%         y0 = [q0;dq0];
+%        
 %     else
 %         y0 = [YE(1:3); YE(4:6)];
 %     end
