@@ -21,17 +21,18 @@ error_d_spread = -dq(2) + dq(1);
 u(1) = Kp(1)*error_torso  + Kd(1)*error_d_torso;
 u(2) = Kp(2)*error_spread + Kd(2)*error_d_spread;
 
-if u(1) > 0
-    u(1) = min(30,u(1));
-else
-    u(1) = max(-30,u(1));
-end
-
-if u(2) > 0
-    u(2) = min(30,u(2));
-else
-    u(2) = max(-30,u(2));
-end
+%limiting torques
+% if u(1) > 0
+%     u(1) = min(30,u(1));
+% else
+%     u(1) = max(-30,u(1));
+% end
+% 
+% if u(2) > 0
+%     u(2) = min(30,u(2));
+% else
+%     u(2) = max(-30,u(2));
+% end
 
 % u(2) = Kp(2)*(-q(2)+q(1)+spread) + Kd(2)*(dq_des(2)-dq(2) + dq_des(1)-dq(1));
 
