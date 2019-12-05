@@ -24,7 +24,7 @@ for j = 1:num_steps
     % update r0:
     
     [x_swf,z_swf,~,~]= kin_swf(sln.YE{j}(1:3), sln.YE{j}(4:6)); %% À vérifier;
-    r0 = r0+ [x_swf;0];
+    r0 = r0 + [x_swf;0];
    
     
 end

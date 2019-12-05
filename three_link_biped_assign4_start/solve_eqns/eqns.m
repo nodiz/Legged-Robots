@@ -1,6 +1,8 @@
 function dy = eqns(t, y)
 % n this is the dimension of the ODE, note that n is 2*DOF, why? 
 % y1 = q1, y2 = q2, y3 = q3, y4 = dq1, y5 = dq2, y6 = dq3
+% dy derive y 
+
 n = 6;  
 q = y(1:n/2);
 dq = y(n/2+1:n);
@@ -16,8 +18,7 @@ B = eval_B();
 
 dy(1:n/2) = dq;
 b =B*u-G-C*dq;
-dy(n/2+1:n) = M\b;
-
+dy(n/2+1:n) = M\b; %ddq
 
 
 end
