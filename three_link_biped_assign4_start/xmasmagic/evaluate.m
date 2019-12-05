@@ -1,23 +1,24 @@
-simOpts = rlSimulationOptions('MaxSteps',500);
+simOpts = rlSimulationOptions('MaxSteps',1000000);
 experience = sim(env,agent,simOpts);
-dataq = experience.Observation.LarryStates.Data(1:3,:,:);
-datadq = experience.Observation.LarryStates.Data(4:6,:,:);
-num_steps = length(experience.Observation.LarryStates.Data);
+d = experience.Observation.lbro.Data;
+dataq = d(:,1:3);
+datadq = d(:,4:6);
+num_steps = length(experience.Observation.lbro.Data);
 h = 0.01;
 figure();
 
 r0 = [0; 0];
 tic();
 for ji = 1:num_steps
-    q = dataq(:,1,ji);
-    dq = datadq(:,1,ji);
+    q = dataq(ji,:);
+    dq = datadq(ji,:);
     pause(h);  % pause for 2 mili-seconds
     % visualize :
     visualize(q, r0);
     hold off
     % update r0:
     [x, ~, dx, ~] = kin_hip(q, dq);
-    r0 = r0 + [dx*h;0];
+    %r0 = r0 + [dx*h;0];
    
     
 end

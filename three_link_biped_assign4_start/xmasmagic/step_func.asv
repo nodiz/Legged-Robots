@@ -1,13 +1,10 @@
-function [NextObs,Reward,IsDone,LoggedSignals] = step_func(Action,LoggedSignals,EnvVars)
+function [NextObs,Reward,IsDone,LoggedSignals] = step_func(Action,LoggedSignals,EnvConstants)
 % This function applies the given action to the environment and evaluates
 % the system dynamics for one simulation step.
-
-global ntot 
-global nstep 
-nstep = nstep + 1;
-
+EnvConstants.n = EnvConstants.n + 1;
+if mod(EnvConstants.n, 100) 
 Torques = Action;
-tspan = linspace(0,EnvVars.Ts,3);
+tspan = linspace(0,EnvConstants.Ts,3);
 
 % Unpack the state vector from the logged signals
 State = LoggedSignals.State;
@@ -39,23 +36,12 @@ IsDone = 0;
 penfall = 0;
 if q_rew(1) > pi*3/4 || q_rew(1) < - pi*3/4
     penfall = -50;
-    nstep = 0 ;
-    ntot = ntot + 1;
-    IsDone = 1;
-elseif nstep == EnvVars.maxsteps - 1
-    ntot = ntot + 1;
     IsDone = 1;
 end
 
 [x_swf,z_swf,dx_swf,dz_swf]= kin_swf(q, dq);
 [x, z, dx, dz] = kin_hip(q, dq);
 
-if mod(ntot, 100) == 0
-    clf
-    visualize(q);
-    pause(0.01)
-end
-
 %Reward = 1 - q_rew(3)  ;
-Reward = dx + dx_swf/10 - 50 * (q_rew(3)) -50 * abs(z-0.4330) - 0.02 * sum(Action.^2) + 50*EnvVars.n/400 + penfall;
+Reward = dx + dx_swf/10 - 50 * (q_rew(3)) -50 * abs(z-0.4330) - 0.02 * sum(Action.^2) + 10 + penfall;
 end

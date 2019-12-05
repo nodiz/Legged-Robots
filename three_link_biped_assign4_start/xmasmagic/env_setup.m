@@ -9,11 +9,11 @@ rng(0)
 numObs = 6;
 numAct = 2;
 Tf = 4;
-EnvConstants.Ts = 0.01;
+EnvVars.Ts = 0.01;
 Ts = 0.01;
 
 ObservationInfo = rlNumericSpec([numObs 1]);
-ObservationInfo.Name = 'Larry States';
+ObservationInfo.Name = 'lbro';
 %ObservationInfo.Description = 'theta1, theta2, theta3, td1, td2, td3, ev';
 ObservationInfo.Description = 'theta1, theta2, theta3, td1, td2, td3';
 
@@ -22,14 +22,19 @@ ActionInfo = rlNumericSpec([numAct 1], 'LowerLimit', [-30; -30], 'UpperLimit', [
 ActionInfo.Name = 'Torques';
 ActionInfo.Description = 'T1, T2';
 
-EnvConstants.Xend = 100;
-EnvConstants.rew_endPrize = 50;
-EnvConstants.rew_speed = 20;
-EnvConstants.rew_torquePrice = [0.002; 0.002];
-EnvConstants.rew_alive = 0.0625;
-EnvConstants.pen_fallen = -19;
+EnvVars.ts = 0.01;
+maxepisodes = 10000;
+maxsteps = ceil(Tf/Ts);
+EnvVars.maxsteps = maxsteps;
 
-StepHandle = @(Action,LoggedSignals) step_func(Action,LoggedSignals,EnvConstants);
+global ntot
+global nstep
+ ntot = 0 ;
+ nstep = 0 ;
+
+
+
+StepHandle = @(Action,LoggedSignals) step_func(Action,LoggedSignals,EnvVars);
 ResetHandle = @reset_func;
 
 % Finally setting up the environment
@@ -69,9 +74,9 @@ critic = rlRepresentation(criticNetwork,ObservationInfo,ActionInfo,'Observation'
 
 actorNetwork = [
     imageInputLayer([numObs 1 1],'Normalization','none','Name','Observation')
-    fullyConnectedLayer(20,'Name','ActorFC1')
+    fullyConnectedLayer(10,'Name','ActorFC1')
     reluLayer('Name','ActorRelu1')
-    fullyConnectedLayer(10,'Name','ActorFC2')
+    fullyConnectedLayer(5,'Name','ActorFC2')
     reluLayer('Name','ActorRelu2')
     fullyConnectedLayer(numAct,'Name','ActorFC3')
     tanhLayer('Name','ActorTanh')
@@ -86,10 +91,11 @@ agentOpts = rlDDPGAgentOptions(...
     'TargetSmoothFactor',1e-3,...
     'ExperienceBufferLength',1e6,...
     'DiscountFactor',0.99,...
-    'MiniBatchSize',64);  % increase if not getting anywhere
-agentOpts.NoiseOptions.Variance = 0.6;
+    'MiniBatchSize',128);  % increase if not getting anywhere
 agentOpts.NoiseOptions.Mean = pi/30; % 6 degres
 agentOpts.NoiseOptions.VarianceDecayRate = 1e-5; % increase variance with time
+agentOptions.NoiseOptions.MeanAttractionConstant = 1;
+agentOptions.NoiseOptions.Variance = 0.1;
 
 % At each sample time step, the noise model is updated using the following formula, where Ts is the agent sample time.
 %x(k) = x(k-1) + MeanAttractionConstant.*(Mean - x(k-1)).*Ts
@@ -102,8 +108,6 @@ agent = rlDDPGAgent(actor,critic,agentOpts);
 
 %% Train the agent
 
-maxepisodes = 5000;
-maxsteps = ceil(Tf/Ts);
 trainOpts = rlTrainingOptions(...
     'MaxEpisodes',maxepisodes,...
     'MaxStepsPerEpisode',maxsteps,...
@@ -111,9 +115,9 @@ trainOpts = rlTrainingOptions(...
     'Verbose',true,...
     'Plots','training-progress',...
     'StopTrainingCriteria','AverageReward',...
-    'StopTrainingValue', 500,...
+    'StopTrainingValue', 120,...
     'SaveAgentCriteria','EpisodeReward',...
-    'SaveAgentValue', 300);
+    'SaveAgentValue', 150);
 
 %trainOpts.ParallelizationOptions.Mode = "async";
 %trainOpts.ParallelizationOptions.StepsUntilDataIsSent = 100;
