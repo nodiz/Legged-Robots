@@ -1,18 +1,18 @@
-simOpts = rlSimulationOptions('MaxSteps',1000000);
+simOpts = rlSimulationOptions('MaxSteps',500);
 experience = sim(env,agent,simOpts);
 d = experience.Observation.lbro.Data;
-dataq = d(:,1:3);
-datadq = d(:,4:6);
-num_steps = length(experience.Observation.lbro.Data);
+dataq = d(1:3,:);
+datadq = d(4:6,:);
+num_steps = length(d);
 h = 0.01;
 figure();
 
 r0 = [0; 0];
 tic();
 for ji = 1:num_steps
-    q = dataq(ji,:);
-    dq = datadq(ji,:);
-    pause(h);  % pause for 2 mili-seconds
+    q = dataq(:,ji);
+    dq = datadq(:,ji);
+    pause(h*2);  % pause for 2 mili-seconds
     % visualize :
     visualize(q, r0);
     hold off
