@@ -6,6 +6,8 @@
 % adapt lines from simulink to matlab code !
 % save videos automatically
 
+close all
+
 rng(0)
 numObs = 6;
 numAct = 2;
@@ -27,6 +29,8 @@ EnvVars.ts = 0.01;
 maxepisodes = 10000;
 maxsteps = ceil(Tf/Ts);
 EnvVars.maxsteps = maxsteps;
+EnvVars.name = 'try1_';
+EnvVars.showN = 100;
 
 global ntot
 global nstep

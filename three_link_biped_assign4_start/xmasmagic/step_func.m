@@ -39,15 +39,13 @@ NextObs = newState;
 
 
 % Video Writing
-if mod(ntot, 100) == 0
+if mod(ntot, EnvVars.showN) == 0
     if nstep == 0
-        videoName = ['videos/', num2str(ntot/100), '_', num2str(nstep), '.avi'];
+        videoName = ['videos/', EnvVars.name, floor(num2str(ntot/EnvVars.showN)),'.avi'];
         writerObj = VideoWriter(videoName);
-        writerObj.FrameRate = 1;
+        writerObj.FrameRate = 20;
         open(writerObj);
-        if ntot == 0
-            figure
-        end
+        figure(1)
     end
     clf
     visualize(q);
@@ -61,8 +59,12 @@ end
 [x, z, dx, dz] = kin_hip(q, dq);
 
 %Reward = 1 - q_rew(3)  ;
-%Reward = dx - 50 * (q_rew(3)) -50 * abs(z-0.4320) - 0.02 * sum(Action.^2) + 0.02*dq(3) + 50*nstep/20;
-Reward = z;
+Reward = 10*dx - 1 * (q_rew(3)) - 0.1 * abs(z-0.4320)^2 - 0.01 * sum(Action.^2);
+if z > 0
+else 
+    Reward = Reward - 50;
+end
+%Reward = z;
 
 % Conclusion
 
@@ -71,11 +73,13 @@ nstep = nstep + 1;
 IsDone = 0;
 
 if nstep == EnvVars.maxsteps
-    ntot = ntot + 1;
+
     IsDone = 1;
-    if mod(ntot, 100) == 0
+    if mod(ntot, EnvVars.showN) == 0
         close(writerObj);
     end
+    ntot = ntot + 1;
+    nstep = 0;
 end
 
 end
