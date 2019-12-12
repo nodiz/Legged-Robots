@@ -8,7 +8,7 @@
 
 function [sln, r0] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread)
 r0 = zeros(num_steps,1);
-h = 0.001; % time step
+h = 0.01; % time step
 tmax = 2; % max time that we allow for a single step
 t0 = 0;
 tspan = t0:h:tmax; % from 0 to tmax with time step h

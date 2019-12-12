@@ -16,7 +16,7 @@ for j = 1:num_steps
     [N, ~] = size(Y);
     for i = 1:skip:N % what does skip do?
         q = Y(i,1:3);
-        pause(0.002);  % pause for 2 mili-seconds
+        pause(0.02);  % pause for 2 mili-seconds
         % visualize :
         visualize(q, r0);
         hold off

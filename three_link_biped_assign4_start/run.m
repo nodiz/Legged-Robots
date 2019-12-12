@@ -2,7 +2,8 @@ function [sln,x, v_moy] = run()
    [q0, dq0,~, ~, num_steps] = control_hyper_parameters();
     
     tic
-    x = optimize_k();
+    %x = optimize_k();
+    x = [485, 856, 19.4, 19.8, 0.09,0.34];
     Kp = x(1:2)
     Kd = x(3:4)
     q_des_torso = x(5)
