@@ -1,35 +1,16 @@
-function [Kp,Kd] = optimize_k(q0, dq0, num_steps)
+function [x] = optimize_k()
 %UNTITLED Optimizes Kp and Kd
 %   Detailed explanation goes here
 
-[~, ~, ~, l1, ~, ~, ~] = set_parameters();
+%initial point for optimizatio
+x0  = [300,100,60, 20, deg2rad(10)]; %x1, x2 = Kp ; x3, x4 = Kd, x5 = q_des_torso
 
+%constraints
+A   = [-1,0,0,0,0;0,-1,0,0,0;0,0,-1,0,0;0,0,0,-1,0;0,0,0,0,-1];
+b   = [0,0,0,0,0];
 
-%define optimization variables
-Kp = optimvar('Kp',2,1,'LowerBound',0);
-Kd = optimvar('Kd1',2,1,'LowerBound',0);
+%solve problem
+x = fmincon(@eqns_opti,x0,A,b);
 
-
-
-[q, dq] = var.YE{end};
-
-var = solve_eqns(q0, dq0, num_steps);
-
-
-prob = optimproblem('Objective','max');
-prob.Objective = l1*sin(q(1));
-
-cons1 = var
-
-% linprob.Constraints.cons1 = I1 - HE1 <= 132000;
-% linprob.Constraints.cons2 = EP + PP >= 12000;
-
-linprob.Constraints.econs1 = LE2 + HE2 == I2;
-linprob.Constraints.econs2 = LE1 + LE2 + BF2 == LPS;
-
-
-
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
 end
 
