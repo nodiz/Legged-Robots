@@ -1,16 +1,16 @@
-function u = control2(q, dq, t, Kp, Kd, q_des_torso)
+function u = control2(q, dq, t, Kp, Kd, q_des_torso, spread)
 % You may call control_hyper_parameters and desired_outputs in this
 % function
 % you don't necessarily need to use all the inputs to this control function
 % freq = 20;
 u = zeros(2,1); 
 
-[~, ~, dq_des_torso, spread_t, ~, ~] = control_hyper_parameters();
+[~, ~, dq_des_torso, ~, ~] = control_hyper_parameters();
 
 error_torso   = -q_des_torso  + q(3);
 error_d_torso = -dq_des_torso + dq(3);
 
-error_spread   = -q(2)  + q(1) - spread_t;
+error_spread   = -q(2)  + q(1) - spread;
 error_d_spread = -dq(2) + dq(1);
 
 

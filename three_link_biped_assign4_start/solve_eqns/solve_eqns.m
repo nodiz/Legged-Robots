@@ -6,7 +6,7 @@
 % number of steps the robot is supposed to take
 % As an example you can use q0 = [pi/6; -pi/3; 0] and dq0 = [0;0;0]. 
 
-function [sln, r0] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso)
+function [sln, r0] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread)
 r0 = zeros(num_steps,1);
 h = 0.001; % time step
 tmax = 2; % max time that we allow for a single step
@@ -28,7 +28,7 @@ sln.YE = {};
 
 for i = 1:num_steps
 
-   [T, Y, TE, YE] = ode45(@(t,y) eqns(t, y, Kp, Kd,  q_des_torso),tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
+   [T, Y, TE, YE] = ode45(@(t,y) eqns(t, y, Kp, Kd,  q_des_torso, spread),tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
    sln.T{i} = T;
    sln.Y{i} = Y;
    sln.TE{i} = TE;
