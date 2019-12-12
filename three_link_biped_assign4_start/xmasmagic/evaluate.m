@@ -1,4 +1,4 @@
-simOpts = rlSimulationOptions('MaxSteps',200);
+simOpts = rlSimulationOptions('MaxSteps',400);
 experience = sim(env,agent,simOpts);
 d = experience.Observation.lbro.Data;
 dataq = d(1:3,:);

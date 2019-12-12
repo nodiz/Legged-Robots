@@ -29,8 +29,8 @@ EnvVars.ts = 0.01;
 maxepisodes = 10000;
 maxsteps = ceil(Tf/Ts);
 EnvVars.maxsteps = maxsteps;
-EnvVars.name = 'try1_';
-EnvVars.showN = 100;
+EnvVars.name = 'home1_';
+EnvVars.showN = 200;
 
 global ntot
 global nstep
@@ -72,7 +72,7 @@ criticNetwork = connectLayers(criticNetwork,'CriticActionFC1','add/in2');
 %figure
 %plot(criticNetwork)
 
-criticOpts = rlRepresentationOptions('LearnRate',5e-03,'GradientThreshold',1);
+criticOpts = rlRepresentationOptions('LearnRate',1e-02,'GradientThreshold',1);
 
 critic = rlRepresentation(criticNetwork,ObservationInfo,ActionInfo,'Observation',{'observation'},'Action',{'action'},criticOpts);
 %% Actor network
@@ -87,7 +87,7 @@ actorNetwork = [
     tanhLayer('Name','ActorTanh')
     scalingLayer('Name','ActorScaling','Scale',max(ActionInfo.UpperLimit))];
 
-actorOpts = rlRepresentationOptions('LearnRate',3e-04,'GradientThreshold',1);
+actorOpts = rlRepresentationOptions('LearnRate',1e-03,'GradientThreshold',1);
 
 actor = rlRepresentation(actorNetwork,ObservationInfo,ActionInfo,'Observation',{'Observation'},'Action',{'ActorScaling'},actorOpts);
 

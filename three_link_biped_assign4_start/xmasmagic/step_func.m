@@ -59,7 +59,7 @@ end
 [x, z, dx, dz] = kin_hip(q, dq);
 
 %Reward = 1 - q_rew(3)  ;
-Reward = 10*dx - 1 * (q_rew(3)) - 0.1 * abs(z-0.4320)^2 - 0.01 * sum(Action.^2);
+Reward = 10*dx - 1 * (q_rew(3)) - 50 * abs(z-0.4320)^2 - 0.02 * sum(Action.^2);
 if z > 0
 else 
     Reward = Reward - 50;
@@ -69,6 +69,7 @@ end
 % Conclusion
 
 nstep = nstep + 1;
+
 
 IsDone = 0;
 
