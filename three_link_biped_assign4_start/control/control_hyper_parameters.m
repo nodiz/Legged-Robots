@@ -1,14 +1,13 @@
 % You can set any hyper parameters of the control function here; you may or
 % may not want to use the step_number as the input of the function. 
 
-function [Kp,Kd,q_des,dq_des, spread_t] = control_hyper_parameters(q,dq) %step_number)
-spread_t = 40/360*2*pi;
-
-Kp = [300;200]/10;
-Kd = [Kp(1)/5;Kp(2)/12];
+function [q0, dq0, dq_des_torso, v_target, num_steps] = control_hyper_parameters() %step_number)
 
 
-q_des = [pi/6, -pi/6, pi/12] ;
-dq_des = [0,0,0];
+q0 = [pi/10; -pi/10; 0];
+dq0 = [0;0;0];
+dq_des_torso = 0;
+v_target = 1;
+num_steps = 50;
 
 end
