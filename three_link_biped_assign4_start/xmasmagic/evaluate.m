@@ -1,4 +1,4 @@
-simOpts = rlSimulationOptions('MaxSteps',400);
+simOpts = rlSimulationOptions('MaxSteps',500);
 experience = sim(env,agent,simOpts);
 d = experience.Observation.lbro.Data;
 dataq = d(1:3,:);
@@ -6,7 +6,7 @@ datadq = d(4:6,:);
 num_steps = length(d);
 h = 0.01;
 figure();
-videoName = ['videos/', 'ttt', '.avi'];
+videoName = ['videos/', 'home3_eval', '.avi'];
 writerObj = VideoWriter(videoName);
 writerObj.FrameRate = 20;
 open(writerObj);
@@ -23,7 +23,7 @@ for ji = 1:num_steps
     hold off
     % update r0:
     [x, ~, dx, ~] = kin_hip(q, dq);
-    %r0 = r0 + [dx*h;0]; 
+    r0 = r0 + [dx*h;0]; 
 end
 t_anim = toc();
 close(writerObj);
