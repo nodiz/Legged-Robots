@@ -2,11 +2,11 @@ function [sln,x, v_moy] = run(opti_type)
    [q0, dq0, ~, ~, num_steps] = control_hyper_parameters(1);
     
     tic
+                x = optimize_k();
     for i = 1:7
      
         switch opti_type
             case "ps"       %pattern search
-                x = optimize_k();
             case "gs"       %global search
                 x = optimize_glob_search();
             case "ga"       %genetic algorithm
