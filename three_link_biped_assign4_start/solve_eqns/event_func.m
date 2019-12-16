@@ -10,12 +10,12 @@ n = 6;
 
 [x_swf,  z_swf, ~, ~] = kin_swf(y(1:n/2), y(n/2+1:n));
 
-if x_swf<0 
-    tol = 1e-2*2;
-else
-    tol = 1e-2;
-end
-
+% if x_swf<0 
+%     tol = 1e-2*2;
+% else
+%     tol = 1e-2;
+% end
+tol = 1e-2;
 
 value = (z_swf + tol) ; %z_swf = 0 when foot hits the ground
 isterminal = 1;  %

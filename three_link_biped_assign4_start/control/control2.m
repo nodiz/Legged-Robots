@@ -5,7 +5,7 @@ function u = control2(q, dq, t, Kp, Kd, q_des_torso, spread)
 % freq = 20;
 u = zeros(2,1); 
 
-[~, ~, dq_des_torso, ~, ~] = control_hyper_parameters();
+[~, ~, dq_des_torso, ~, ~] = control_hyper_parameters(1);
 
 error_torso   = -q_des_torso  + q(3);
 error_d_torso = -dq_des_torso + dq(3);

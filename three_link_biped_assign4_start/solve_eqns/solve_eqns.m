@@ -6,13 +6,17 @@
 % number of steps the robot is supposed to take
 % As an example you can use q0 = [pi/6; -pi/3; 0] and dq0 = [0;0;0]. 
 
-function [sln, r0] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread)
-r0 = zeros(num_steps,1);
+function [sln, xhip_abs] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread)
+r0 = zeros(num_steps+1,1);
+xhip_abs = zeros(num_steps+1,1);
 h = 0.001; % time step
 tmax = 2; % max time that we allow for a single step
 t0 = 0;
 tspan = t0:h:tmax; % from 0 to tmax with time step h
 y0 = [q0; dq0];
+
+xhip0 = kin_hip2(q0);
+xhip_abs(1) = xhip0;
 
 opts = odeset('RelTol', 1e-5, 'Events', @event_func);
 
@@ -40,9 +44,8 @@ for i = 1:num_steps
     
     % Impact map
     [x_swf,  ~, ~, ~] = kin_swf(YE(1:3), YE(4:6));
+    [x_hip] = kin_hip2(YE(1:3));
    
-   
-    
     t0 = T(end);
     tmax = t0+2;
     tspan = t0:h:tmax;
@@ -50,8 +53,12 @@ for i = 1:num_steps
     [q0,dq0] = impact(YE(1:3)', YE(4:6)');
     y0 = [q0;dq0];
      
-    
     r0(i+1) = r0(i)+ x_swf; %global xcoordinate. Useful for cost fct
+    
+    xhip_abs(i+1) = r0(i) + x_hip;
+    
+   
+    
 %     if x_swf > 0
 %         [q0,dq0] = impact(YE(1:3)', YE(4:6)');
 %        

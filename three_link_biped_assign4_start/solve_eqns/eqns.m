@@ -4,6 +4,7 @@ function dy = eqns(t, y, Kp, Kd,  q_des_torso, spread)
 n = 6;  
 q = y(1:n/2);
 dq = y(n/2+1:n);
+%u = control(q,dq, [20, 5], [21, 20, 15], q_des_torso, spread);
 u = control2(q, dq, t, Kp, Kd,  q_des_torso, spread);
 dy = zeros(n, 1);
 

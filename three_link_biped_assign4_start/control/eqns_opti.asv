@@ -2,10 +2,7 @@ function cost = eqns_opti(x)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 %Constants for defining the cost function
-persistent n
-if isempty(n)
-    n = 0;
-end
+
 
 Kp = x(1:2);
 Kd = x(3:4);
@@ -14,11 +11,11 @@ spread = x(6);
 
 
 S = 1;   %sampling rate
-C = [1,1,1]; %weight for cost function
+C = [10,50,1]; %weight for cost function
 bool = 0;
 
 %initializations
-[q0, dq0,~, v_target, num_steps] = control_hyper_parameters(); %should we define q0 dq0 with respecz to spead and q3_target??
+[~, v_target, num_steps] = control_hyper_parameters(); %should we define q0 dq0 with respecz to spead and q3_target??
 [~, ~, ~, l1, ~, ~, ~] = set_parameters();
 hip_height = l1* cos(spread/2);
 
@@ -31,17 +28,23 @@ cost_array_z = zeros(floor(num_steps/S),1);
 %keeping torso at right angle
 cost_array_torso = zeros(floor(num_steps/S),1);
 
-
-[sln, r0] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread);
+[q0, dq0] = initialize_pos(spread, q_des_torso);
+[sln, xhip_abs] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread);
 
 
 %first itertion outside loop
 q = sln.YE{1};
+if q(3) > pi
+    q(3) = q(3)-2*pi;
+elseif q(3) < -pi
+    q(3) = q(3) + 2*pi;
+end
+    
+
 q = q(1:3);
 [~, z_h] = kin_hip2(q);
 
 cost_array_z(1) = (z_h -  hip_height)^2;
-
 cost_array_torso(1) = (q(3) - q_des_torso)^2;
 
 
@@ -49,24 +52,29 @@ j = 2;
 
 for i =S+1:S:num_steps
     
-    if length(sln.YE{i}) < 3
+    if length(sln.YE) < i
         bool = 1;
         break
     end
     
     q =sln.YE{i};
+    
+    if length(q)<3
+        bool = 1;
+        break
+    end
     q = q(1:3);
      
     t = sln.T{i}(end);
     t_pre = sln.T{i-S}(end);
-    [x_h,z_h]  = kin_hip2(q);
+    [~,z_h]  = kin_hip2(q);
     
    
     cost_array_z(j) = (z_h -  hip_height)^2;
     
-    
-    r = r0(i) - r0(i-S); %step length
-    cost_array_x(j) = ((r-x_h)/(t-t_pre) - v_target)^2;
+
+    delta_xhip = xhip_abs(i) - xhip_abs(i-1);
+    cost_array_x(j) = (delta_xhip/(t-t_pre) - v_target)^2;
     cost_array_torso(j) = (q(3) - q_des_torso)^2;
     
     j = j+1;
@@ -80,11 +88,9 @@ cost_torso = sum(cost_array_torso);
 
 if bool
     cost = inf;
-    disp("KAWABOUNGA")
 else
     cost =  C(1)*costx + C(2)*costz + C(3)*cost_torso;
 end
 
-n = n+1
 end
 
