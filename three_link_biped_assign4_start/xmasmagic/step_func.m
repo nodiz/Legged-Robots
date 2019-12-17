@@ -6,8 +6,9 @@ global ntot
 global nstep
 global writerObj
 
-verboseOut = 1;
+verboseOut = 0;
 train = 1;
+
 tspan = linspace(0,EnvVars.Ts,2);
 
 % Calculate next state 
@@ -38,16 +39,16 @@ NextObs = [newState;0;0];
 [x_swf,z_swf,dx_swf,y_swf]= kin_swf(q, dq); %% ? v?rifier;
 [x, z, dx, dz] = kin_hip(q, dq);
 
-speedReward = 10*dx;
-torsoPenality = 10*(q_rew(3)- 0.09)^2;
+speedReward = 5*min(dx,10);
+torsoPenality = 5*(normAngle(q_rew(3) - 0.09))^2;
 zPenality =  20*abs(min(z-0.5,0))^2;
-actionPenality = 0.003 * sum(Action.^2);
+actionPenality = 0.002 * sum(Action.^2);
 
-Reward = speedReward - torsoPenality - zPenality - actionPenality;
+Reward = speedReward - torsoPenality - zPenality - actionPenality + 0.5;
 
 IsDone = 0;
 if z < 0 
-    Reward = Reward - 50;
+    Reward = Reward-500;
     IsDone = 1;
 end
     
@@ -79,8 +80,9 @@ if mod(ntot, EnvVars.showN) == 0
 end
 
 % Conclusion
+nstep = nstep + 1;
 
-if nstep == EnvVars.maxsteps && train 
+if (or(EnvVars.maxsteps == nstep, IsDone == 1) && train )
     IsDone = 1;
     if mod(ntot, EnvVars.showN) == 0
         close(writerObj);
@@ -88,8 +90,6 @@ if nstep == EnvVars.maxsteps && train
     ntot = ntot + 1;
     nstep = 0;
 end
-
-nstep = nstep + 1;
 
 end
 

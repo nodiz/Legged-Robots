@@ -1,12 +1,12 @@
 simOpts = rlSimulationOptions('MaxSteps',500);
-experience = sim(env,agent,simOpts);
+experience = sim(env,saved_agent,simOpts);
 d = experience.Observation.lbro.Data;
 dataq = d(1:3,:);
 datadq = d(4:6,:);
 num_steps = length(d);
 h = 0.01;
 figure();
-videoName = ['videos/', 'home3_eval', '.avi'];
+videoName = ['videos/', 'robo3_eval2', '.avi'];
 writerObj = VideoWriter(videoName);
 writerObj.FrameRate = 20;
 open(writerObj);

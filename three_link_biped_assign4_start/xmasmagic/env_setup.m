@@ -11,7 +11,7 @@ close all
 rng(0)
 numObs = 8;
 numAct = 2;
-Tf = 2; %  seconds
+Tf = 4; %  seconds
 EnvVars.Ts = 0.01;
 Ts = 0.01;
 
@@ -29,7 +29,7 @@ EnvVars.ts = 0.01;
 maxepisodes = 10000;
 maxsteps = ceil(Tf/Ts);
 EnvVars.maxsteps = maxsteps;
-EnvVars.name = 'home2_';
+EnvVars.name = 'robo3_';
 EnvVars.showN = 100;
 
 global ntot
@@ -112,7 +112,7 @@ agentOptions.NoiseOptions.Variance = 0.1;
 
 %figure
 %plot(actorNetwork)
-agent = rlDDPGAgent(actor,critic,agentOpts);
+%agent = rlDDPGAgent(actor,critic,agentOpts);
 
 
 %% Train the agent
@@ -124,9 +124,9 @@ trainOpts = rlTrainingOptions(...
     'Verbose',true,...
     'Plots','training-progress',...
     'StopTrainingCriteria','AverageReward',...
-    'StopTrainingValue', 100,...
+    'StopTrainingValue', 10000,...
     'SaveAgentCriteria','EpisodeReward',...
-    'SaveAgentValue', 95);
+    'SaveAgentValue', 200);
 
 %trainOpts.ParallelizationOptions.Mode = "async";
 %trainOpts.ParallelizationOptions.StepsUntilDataIsSent = 100;
