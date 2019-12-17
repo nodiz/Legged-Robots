@@ -1,4 +1,4 @@
-function u = control(q,dq, k, C, q_des_torso, spread) %control(t, q, dq, q0, dq0, step_number)
+function u = control(q,dq, k, C, q_des_torso) %control(t, q, dq, q0, dq0, step_number)
 % You may call control_hyper_parameters and desired_outputs in this
 
 % function

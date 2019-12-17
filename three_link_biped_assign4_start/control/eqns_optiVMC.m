@@ -1,13 +1,12 @@
-function cost = eqns_opti(x, index)
+function cost = eqns_optiVMC(x)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 %Constants for defining the cost function
 
 
-Kp = x(1:2);
-Kd = x(3:4);
-q_des_torso = x(5);
-spread = x(6);
+ k = x(1:2);
+ C_vmc = x(3:5);
+ q_des_torso = x(6);
 
 
 S = 1;   %sampling rate
@@ -17,7 +16,7 @@ bool = 0;
 %initializations
 [q0, dq0, ~, v_target, num_steps] = control_hyper_parameters(); %should we define q0 dq0 with respecz to spead and q3_target??
 [~, ~, ~, l1, ~, ~, ~] = set_parameters();
-hip_height = l1* cos(spread/2);
+
 
 %matching targeted speed at every step:
 cost_array_x = zeros(floor(num_steps/S),1);
@@ -30,7 +29,7 @@ cost_array_torso = zeros(floor(num_steps/S),1);
 
 
 %[sln, xhip_abs] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread);
-[sln, xhip_abs] = solve_eqnsVMC(q0, dq0, num_steps, k, C,  q_des_torso);
+[sln, xhip_abs] = solve_eqnsVMC(q0, dq0, num_steps, k, C_vmc,  q_des_torso);
 
 %first itertion outside loop
 q = sln.YE{1};
@@ -42,6 +41,7 @@ end
     
 
 q = q(1:3);
+hip_height = l1* cos(q(2));
 [~, z_h] = kin_hip2(q);
 
 cost_array_z(1) = (z_h -  hip_height)^2;
@@ -64,7 +64,8 @@ for i =S+1:S:num_steps
         break
     end
     q = q(1:3);
-     
+    hip_height = l1* cos(q(2));
+    
     t = sln.T{i}(end);
     t_pre = sln.T{i-S}(end);
     [~,z_h]  = kin_hip2(q);
@@ -93,4 +94,5 @@ else
 end
 
 end
+
 

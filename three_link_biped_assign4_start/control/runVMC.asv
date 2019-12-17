@@ -1,0 +1,24 @@
+function [sln,x, v_moy] = runVMC()
+   [q0, dq0, ~, ~, num_steps] = control_hyper_parameters(1);
+    
+
+    tic
+    x = opti_gaVMC(i);
+
+    toc
+    k = x(1:3);
+    C = x(4:5);
+    q_des_torso = x(6);
+    spread = x(6);
+    save('solution_n'+string(i), 'x');
+    [sln, xhip_abs] = solve_eqns(q0,dq0,num_steps,Kp, Kd, q_des_torso, spread);
+
+    delta_xhip_tot = xhip_abs(end)-xhip_abs(2);
+    t = sln.TE{end};
+    t_pre = sln.TE{1};
+    v_moy = (delta_xhip_tot)/(t-t_pre);
+    save('vmoy'+string(i), 'v_moy');
+    disp("done")
+
+    %animate(sln);
+end

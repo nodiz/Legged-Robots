@@ -10,9 +10,10 @@ dq0 = [1.87;1.98;-0.44];
 %q0 = [0.1; -0.1; 0];
 %dq0 = [0.1;0.1;0];
 dq_des_torso = 0;
-v_target_array = [0.3, 0.35,0.4,0.45,0.5, 0.65,0.70,0.75]; 
+%v_target_array = [0.3, 0.35,0.4,0.45,0.5, 0.65,0.70,0.75]; 
 
-v_target = v_target_array(i);
+v_target = 0.5;
+%v_target_array(i);
 num_steps = 30;
 
 end

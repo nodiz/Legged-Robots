@@ -10,7 +10,7 @@ x0  = [55, 25,10, 5, 0.005, 0.6]; % start point away from the minimum
 
 
 lower_bound = [0,0,0,0,0,0];
-upper_bound = [Inf, Inf, Inf,Inf, deg2rad(45), deg2rad(90)];
+upper_bound = [1000, 1000, 1000,1000, deg2rad(45), deg2rad(90)];
 nvars = length(lower_bound);
 
 
