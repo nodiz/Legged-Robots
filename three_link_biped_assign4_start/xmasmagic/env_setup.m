@@ -1,11 +1,5 @@
 %% Setup and infos
 
-% TODO
-% comment passer logged signal? !
-% visualizer le steps chaque x iterations? !
-% adapt lines from simulink to matlab code !
-% save videos automatically
-
 close all
 
 rng(0)

@@ -8,7 +8,6 @@ global writerObj
 
 verboseOut = 0;
 train = 1;
-
 tspan = linspace(0,EnvVars.Ts,2);
 
 % Calculate next state 

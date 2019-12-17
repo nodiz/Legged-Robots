@@ -1,4 +1,4 @@
-simOpts = rlSimulationOptions('MaxSteps',500);
+simOpts = rlSimulationOptions('MaxSteps',1000);
 experience = sim(env,saved_agent,simOpts);
 d = experience.Observation.lbro.Data;
 dataq = d(1:3,:);
@@ -8,14 +8,14 @@ h = 0.01;
 figure();
 videoName = ['videos/', 'robo3_eval2', '.avi'];
 writerObj = VideoWriter(videoName);
-writerObj.FrameRate = 20;
+writerObj.FrameRate = 1/h;
 open(writerObj);
 r0 = [0; 0];
 tic();
 for ji = 1:num_steps
     q = dataq(:,ji);
     dq = datadq(:,ji);
-    pause(h*2);  % pause for 2 mili-seconds
+    pause(h);  % pause for 2 mili-seconds
     % visualize :
     visualize(q, r0);
     F = getframe(gcf) ;
