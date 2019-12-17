@@ -11,7 +11,7 @@ spread = x(6);
 
 
 S = 1;   %sampling rate
-C = [1,50,5]; %weight for cost function
+C = [5,5,5]; %weight for cost function
 bool = 0;
 
 %initializations
