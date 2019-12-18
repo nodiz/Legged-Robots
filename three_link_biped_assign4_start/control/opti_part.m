@@ -1,4 +1,4 @@
-function [x] = opti_ga(i)
+function [x] = opti_part(i)
 %OPTI_GA Optimize with genetic algorithm
 
 
@@ -10,15 +10,12 @@ x0  = [55, 25,10, 5, 0.005, 0.6]; % start point away from the minimum
 
 
 lower_bound = [0,0,0,0,0,0];
-upper_bound = [Inf, Inf, Inf,Inf, deg2rad(45), deg2rad(90)];
+upper_bound = [1000, 1000, 1000,1000, deg2rad(45), deg2rad(90)];
 nvars = length(lower_bound);
 
 
 initpop = 10*randn(20,6) + repmat(x0,20,1);
-opt = optimoptions('ga', 'InitialPopulationMatrix', initpop, 'FunctionTolerance'	
-);
+opt = optimoptions('particleswarm', 'InitialSwarmMatrix', initpop);
 %solve problem
-[x, fval, flag] = ga(@(x) eqns_opti(x,i),nvars,[],[],[],[],lower_bound,upper_bound,[], opt)
-
-end
+[x, fval, flag] = particleswarm(@(x) eqns_opti(x,i),nvars,lower_bound,upper_bound, opt);
 

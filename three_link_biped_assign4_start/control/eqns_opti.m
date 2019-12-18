@@ -29,8 +29,8 @@ cost_array_z = zeros(floor(num_steps/S),1);
 cost_array_torso = zeros(floor(num_steps/S),1);
 
 
-%[sln, xhip_abs] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread);
-[sln, xhip_abs] = solve_eqnsVMC(q0, dq0, num_steps, k, C,  q_des_torso);
+[sln, xhip_abs] = solve_eqns(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread);
+%[sln, xhip_abs] = solve_eqnsVMC(q0, dq0, num_steps, k, C,  q_des_torso);
 
 %first itertion outside loop
 q = sln.YE{1};

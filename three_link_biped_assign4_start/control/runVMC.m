@@ -11,7 +11,7 @@ function [sln,x, v_moy] = runVMC()
     q_des_torso = x(6);
     
     %('solution_n'+string(i), 'x');
-    [sln, xhip_abs] = solve_eqnsVMC(q0,dq0,num_steps,k, C, q_des_torso);
+    [sln, xhip_abs] = solve_eqnsVMC(q0,dq0,num_steps,k, C, q_des_torso, x_des);
 
     delta_xhip_tot = xhip_abs(end)-xhip_abs(2);
     t = sln.TE{end};

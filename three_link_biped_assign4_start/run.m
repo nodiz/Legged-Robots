@@ -2,7 +2,7 @@ function [sln,x, v_moy] = run(opti_type)
    [q0, dq0, ~, ~, num_steps] = control_hyper_parameters(1);
     
     
-    for i = 1:8
+    for i = 1:1
         tic
         switch opti_type
             case "ms"
@@ -13,6 +13,10 @@ function [sln,x, v_moy] = run(opti_type)
                 x = optimize_glob_search();
             case "ga"       %genetic algorithm
                 x = opti_ga(i);
+            case "part"
+                x = opti_part(i);
+            case "sur"
+                x = opti_sur(i);
         end
         toc
         Kp = x(1:2);
