@@ -1,4 +1,4 @@
-function u = control(q,dq, k, C, q_des_torso, x_des) %control(t, q, dq, q0, dq0, step_number)
+function u = control(q,dq, k, C, q_des_torso, x_des, i_speed) %control(t, q, dq, q0, dq0, step_number)
 % You may call control_hyper_parameters and desired_outputs in this
 
 % function
@@ -23,7 +23,7 @@ end
 
 [~, ~, dx_hip,~]    = kin_hip(q, dq);
 [x_swf, ~, dx_swf, ~] = kin_swf(q, dq);
-[~, ~, ~, v_target, ~] = control_hyper_parameters(1);
+[~, ~, ~, v_target, ~] = control_hyper_parameters(i_speed);
 z_des                  = l1*cos(deg2rad(0));
 
 
@@ -33,7 +33,7 @@ J = [l1*cos(q(1)), 0, 0; %rabbit hip
     0, 0, 1]; %torso
 
 
-F = [ -C(1)*(dx_hip-v_target); %rabbit on hip
+F = [ C(1)*(dx_hip-v_target); %rabbit on hip
       k(1)*(x_des - x_swf) + C(2)*(-dx_swf);%xswf
       k(2)*sin(q(2));
        -k(3)*(q(3)-q_des_torso) - C(3)*dq(3)]; %spring on torso

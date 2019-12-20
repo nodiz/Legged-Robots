@@ -3,9 +3,6 @@ function u = control2(q, dq, t, Kp, Kd, q_des_torso, spread)
 % function
 % you don't necessarily need to use all the inputs to this control function
 % freq = 20;
-global u_vect;
-global t_vect;
-global dq_vect;
 u = zeros(2,1); 
 
 [~, ~, dq_des_torso, ~, ~] = control_hyper_parameters(1);
@@ -33,9 +30,11 @@ else
     u(2) = max(-30,u(2));
 end
 
+figure(2)
+plot(t, u(1), 'red')
+hold on
+plot(t, u(2
 
-t_vect = [t_vect, t];
-u_vect = [u_vect, u];
-dq_vect = [dq_vect, dq];
+
 
 end

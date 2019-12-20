@@ -3,6 +3,7 @@ function dy = eqns(t, y, Kp, Kd,  q_des_torso, spread)
 % y1 = q1, y2 = q2, y3 = q3, y4 = dq1, y5 = dq2, y6 = dq3
 % dy derive y 
 
+
 n = 6;  
 q = y(1:n/2);
 dq = y(n/2+1:n);

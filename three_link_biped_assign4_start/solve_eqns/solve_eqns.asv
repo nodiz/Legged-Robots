@@ -11,8 +11,6 @@ global u_vect;
 u_vect = [];
 global t_vect;
 t_vect = [];
-global dq_vect;
-dq_vect = [];
 
 
 r0 = zeros(num_steps+1,1);
@@ -112,17 +110,13 @@ title('step frequency vs step number')
 
 
 figure()
-
+l = length(sln.T{
 plot(states(:, 1), states(:, 4), 'red.')
 hold on
 plot(states(:, 2), states(:, 5), 'blue.')
 plot(states(:, 3), states(:, 6), 'green.')
 title('dq vs q')
 
-
-cost1 = max(0, u_vect(1, :).*(dq_vect(1, :)-dq_vect(3, :)));
-cost2 = max(0, u_vect(2, :).*(dq_vect(2, :)-dq_vect(3, :)));
-CoT = (sum(cost1) + sum(cost2))/(xhip_abs(end)-xhip_abs(1))
 end
 
 
