@@ -7,7 +7,8 @@ global nstep
 global writerObj
 
 verboseOut = 0;
-train = 1;
+videoOut = 0;
+train = 0;
 tspan = linspace(0,EnvVars.Ts,2);
 
 % Calculate next state 
@@ -64,27 +65,30 @@ end
 
 % Video Writing
 
-if mod(ntot, EnvVars.showN) == 0
-    if nstep == 0
-        videoName = ['videos/', EnvVars.name, floor(num2str(ntot/EnvVars.showN)),'.avi'];
-        writerObj = VideoWriter(videoName);
-        writerObj.FrameRate = 20;
-        open(writerObj);
-        figure(1)
+if videoOut
+    if mod(ntot, EnvVars.showN) == 0
+        if nstep == 0
+            videoName = ['videos/', EnvVars.name, floor(num2str(ntot/EnvVars.showN)),'.avi'];
+            writerObj = VideoWriter(videoName);
+            writerObj.FrameRate = 20;
+            open(writerObj);
+            figure(1)
+        end
+        clf
+        visualize(q);
+        F = getframe(gcf) ;
+        writeVideo(writerObj, F);
     end
-    clf
-    visualize(q);
-    F = getframe(gcf) ;
-    writeVideo(writerObj, F);
 end
-
 % Conclusion
 nstep = nstep + 1;
 
 if (or(EnvVars.maxsteps == nstep, IsDone == 1) && train )
     IsDone = 1;
-    if mod(ntot, EnvVars.showN) == 0
+    if videoOut
+        if mod(ntot, EnvVars.showN) == 0
         close(writerObj);
+        end
     end
     ntot = ntot + 1;
     nstep = 0;
