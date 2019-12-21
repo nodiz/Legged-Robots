@@ -26,15 +26,13 @@ for i = 1:length(mat)
     time = sln.TE{end}-sln.TE{1};
     v_moy(i) = dist/time;
 end
-
+v_moy
 KP_torso = mat(:,1);
 KP_spread = mat(:,2);
 Kd_torso = mat(:,3);
 Kd_spread = mat(:,4);
 Q3_des = mat(:,5);
 Spread = mat(:,6);
-
-v_moy = sort(v_moy)
 
 figure()
 plot(v_moy, KP_torso, 'r*')

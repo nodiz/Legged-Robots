@@ -23,7 +23,7 @@ t0 = 0;
 tspan = t0:h:tmax; % from 0 to tmax with time step h
 y0 = [q0; dq0];
 
-xhip0 = kin_hip2(q0);
+xhip0 = kin_hip(q0);
 xhip_abs(1) = xhip0;
 
 opts = odeset('RelTol', 1e-5, 'Events', @event_func);
@@ -52,7 +52,7 @@ for i = 1:num_steps
     
     % Impact map
     [x_swf,  ~, ~, ~] = kin_swf(YE(1:3), YE(4:6));
-    [x_hip] = kin_hip2(YE(1:3));
+    [x_hip] = kin_hip(YE(1:3)');
    
     t0 = T(end);
     tmax = t0+2;
@@ -77,7 +77,7 @@ for i = 1:num_steps
    
 end
 r0 = r0(2:end);
-analyze(sln, xhip_abs, num_steps);
+
 
 end
 

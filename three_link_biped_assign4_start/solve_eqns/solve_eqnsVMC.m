@@ -69,7 +69,6 @@ for i = 1:num_steps
    
 end
 r0 = r0(2:end);
-analyze(sln, xhip_abs, num_steps);
 end
 
 
