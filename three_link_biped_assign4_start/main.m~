@@ -13,7 +13,7 @@ switch control
        x = control_params(speed,:);
        sln = solve_eqnsVMC(q0, dq0, num_steps, x(1:2), x(3:4),  x(5), x(6));
     case 'DDPG'
-        
+        l
 end
 
 animate(sln);

@@ -1,4 +1,3 @@
-
 simOpts = rlSimulationOptions('MaxSteps',1000);
 
 path = '/Users/nodiz/Documents/savedAgents_robop3/';
