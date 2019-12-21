@@ -32,7 +32,7 @@ sln.YE = {};
 
 for i = 1:num_steps
 
-   [T, Y, TE, YE] = ode45(@(t,y) eqnsVMC(t, y, k, C,  q_des_torso, x_des, i_speed),tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
+   [T, Y, TE, YE] = ode45(@(t,y) eqnsVMC(t, y, k, C,  q_des_torso, x_des, i_speed, i),tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
    sln.T{i} = T;
    sln.Y{i} = Y;
    sln.TE{i} = TE;

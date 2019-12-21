@@ -1,4 +1,4 @@
-function 
+function [sln,x, v_moy] = runVMC()
    [q0, dq0, ~, ~, num_steps] = control_hyper_parameters();
    for i_speed = 1:1
         tic

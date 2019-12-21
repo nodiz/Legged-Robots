@@ -39,8 +39,8 @@ sln.YE = {};
 
 
 for i = 1:num_steps
-
-   [T, Y, TE, YE] = ode45(@(t,y) eqns(t, y, Kp, Kd,  q_des_torso, spread),tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
+    
+   [T, Y, TE, YE] = ode45(@(t,y) eqns(t, y, Kp, Kd,  q_des_torso, spread, i),tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
    sln.T{i} = T;
    sln.Y{i} = Y;
    sln.TE{i} = TE;
@@ -95,7 +95,7 @@ plot(time, states(:, 3), 'green.')
 title('angles vs time')
 
 
-[~, ~, dx_h, ~] = kin_hip(states(:, 1:3)', states(:, 4:6)');
+[~, z_h, dx_h, ~] = kin_hip(states(:, 1:3)', states(:, 4:6)');
 figure()
 plot(time, dx_h, 'blue.')
 title('hip speed vs time')
@@ -118,6 +118,12 @@ hold on
 plot(states(:, 2), states(:, 5), 'blue.')
 plot(states(:, 3), states(:, 6), 'green.')
 title('dq vs q')
+
+figure()
+
+plot(time, z_h , 'blue');
+title('z_coordinate vs step number')
+
 
 
 cost1 = max(0, u_vect(1, :).*(dq_vect(1, :)-dq_vect(3, :)));

@@ -33,10 +33,10 @@ J = [l1*cos(q(1)), 0, 0; %rabbit hip
     0, 0, 1]; %torso
 
 
-F = [ C(1)*(dx_hip-v_target); %rabbit on hip
-      k(1)*(x_des - x_swf) + C(2)*(-dx_swf);%xswf
-      k(2)*sin(q(2));
-       -k(3)*(q(3)-q_des_torso) - C(3)*dq(3)]; %spring on torso
+F = [C(1)*(dx_hip-v_target); %rabbit on hip
+     k(1)*(x_des - x_swf) + C(2)*(-dx_swf);%xswf
+     k(2)*sin(q(2));
+     -k(3)*(q(3)-q_des_torso) - C(3)*dq(3)]; %spring on torso
 
  
  T = J'*F;
