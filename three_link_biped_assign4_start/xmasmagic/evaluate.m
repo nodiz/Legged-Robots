@@ -44,4 +44,3 @@ end
 real_time_factor = h*num_steps/t_anim;% This is only an estimation 
 fprintf('Real time factor:');
 disp(real_time_factor);
-dsp(r0(1));
