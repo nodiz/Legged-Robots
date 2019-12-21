@@ -9,7 +9,7 @@ dq0 = [1.87;1.98;-0.44];
 dq_des_torso = 0;
 
 if nargin > 0
-    v_target_array = 1.5; 
+    v_target_array = 0.3; 
     v_target = v_target_array(i);
 end
 
