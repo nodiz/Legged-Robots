@@ -8,6 +8,8 @@ function analyze(sln)
 %       o -
 %--------------------------------------------------------------------------
 
+
+
 % Use the global vecotrs
 global u_vect  % command vector
 global t_vect  % time vector
