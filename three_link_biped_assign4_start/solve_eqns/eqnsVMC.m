@@ -1,26 +1,39 @@
-function dy = eqnsVMC(t, y, k, C,  q_des_torso, x_des, i_speed, step_number)
-% n this is the dimension of the ODE, note that n is 2*DOF, why? 
-% y1 = q1, y2 = q2, y3 = q3, y4 = dq1, y5 = dq2, y6 = dq3
-% dy derive y 
+function dy = eqnsVMC(t, y, k, C,  q_des_torso, x_des, step_number)
+%--------------------------------------------------------------------------
+%   eqnsVMC : compute the variation in y : dy and ddy (for VMC)
+%
+%   inputs:
+%       o t            : time vector 
+%       o y            : angle and derivate vector
+%       o k            : spring factor for the VMC
+%       o C            : damping factor for the VMC
+%       o q_des_torso  : objective angle for the torse
+%       o x_des        : objective x
+%       o step_number  : number of the step
+%   outputs:
+%       o dy           : variation of y : dy and ddy
+%--------------------------------------------------------------------------
 
-n = 6;  
-q = y(1:n/2);
-dq = y(n/2+1:n);
-u = control(q,dq, k, C, q_des_torso, x_des, i_speed);
+% Extract q and dq
+q = y(1:3);
+dq = y(4:6);
+
+% Apply the control and the noise
+u = control(q,dq, k, C, q_des_torso, x_des);
 u = add_noise(u, q, step_number);
-%u = control2(q, dq, t, Kp, Kd,  q_des_torso, spread);
-dy = zeros(n, 1);
 
-% write down the equations for dy:
+% Intialize dy and download system matrix
+dy = zeros(n, 1);
 M = eval_M(q);
 G = eval_G(q);
 C = eval_C(q,dq);
 B = eval_B();
 
-
-dy(1:n/2) = dq;
+% Compute dq
+dy(1:3) = dq;
+% Compute ddq with the system equation
 b =B*u-G-C*dq;
-dy(n/2+1:n) = M\b; %ddq
+dy(4:6) = M\b; %ddq
 
 
 end

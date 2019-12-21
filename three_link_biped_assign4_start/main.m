@@ -1,5 +1,9 @@
-control = 'PD'; %'PD' or 'VMC' or 'DDPG'
-speed = 1;      %1 to 9: 1 is the slowest gait, 9 the fastest.
+%--------------------------------------------------------------------------
+%   main : main of the program, call it to see our results
+%--------------------------------------------------------------------------
+
+control = 'VMC'; %'PD' or 'VMC' or 'DDPG'
+speed = 9;      %1 to 9: 1 is the slowest gait, 9 the fastest.
 
 [q0, dq0, ~, ~, num_steps] = control_hyper_parameters();
 
@@ -13,6 +17,7 @@ switch control
        x = control_params(speed,:);
        sln = solve_eqnsVMC(q0, dq0, num_steps, x(1:2), x(3:4),  x(5), x(6));
     case 'DDPG'
+       disp('No DDPG implemented');
         
 end
 

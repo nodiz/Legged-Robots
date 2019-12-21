@@ -1,27 +1,38 @@
 function dy = eqns(t, y, Kp, Kd,  q_des_torso, spread, step_n)
-% n this is the dimension of the ODE, note that n is 2*DOF, why? 
-% y1 = q1, y2 = q2, y3 = q3, y4 = dq1, y5 = dq2, y6 = dq3
-% dy derive y 
+%--------------------------------------------------------------------------
+%   eqns : compute the variation in y : dy and ddy (for PD)
+%
+%   inputs:
+%       o t            : time vector 
+%       o y            : angle and derivate vector
+%       o Kp           : Kp of the PD
+%       o Kd           : Kd of the PD
+%       o q_des_torso  : objective angle for the torse
+%       o spread       : objective angle for the spread
+%       o step_n       : number of the step
+%   outputs:
+%       o dy           : variation of y : dy and ddy
+%--------------------------------------------------------------------------
 
+% Extract q and dq
+q = y(1:3);
+dq = y(4:6);
 
-n = 6;  
-q = y(1:n/2);
-dq = y(n/2+1:n);
-%u = control(q,dq, k, C, q_des_torso);
+% Apply the control and the noise
 u = control2(q, dq, t, Kp, Kd,  q_des_torso, spread);
 u = add_noise(u, q, step_n);
-dy = zeros(n, 1);
 
-% write down the equations for dy:
+% Intialize dy and download system matrix
+dy = zeros(n, 1);
 M = eval_M(q);
 G = eval_G(q);
 C = eval_C(q,dq);
 B = eval_B();
 
-
-dy(1:n/2) = dq;
+% Compute dq
+dy(1:3) = dq;
+% Compute ddq with the system equation
 b =B*u-G-C*dq;
-dy(n/2+1:n) = M\b; %ddq
-
+dy(4:6) = M\b; %ddq
 
 end
