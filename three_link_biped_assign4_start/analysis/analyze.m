@@ -81,9 +81,12 @@ plot(time, z_h , 'blue');
 title('z_coordinate vs step number')
 
 % Compute the cost of transportation
+[m1, m2, m3, ~, ~, ~, g] = set_parameters()
 cost1 = max(0, u_vect(1, :).*(dq_vect(1, :)-dq_vect(3, :)));
 cost2 = max(0, u_vect(2, :).*(dq_vect(2, :)-dq_vect(3, :)));
 CoT = (sum(cost1) + sum(cost2))/(xhip_abs(end)-xhip_abs(1));
 disp(CoT);
+CoT_norm = CoT/(g*(m1+m2+m3));
+disp(CoT_norm);
 
 end
