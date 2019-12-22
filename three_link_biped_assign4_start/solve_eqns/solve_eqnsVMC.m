@@ -23,6 +23,7 @@ function [sln, xhip_abs] = solve_eqnsVMC(q0, dq0, num_steps, k, C, ...
 
 % Time vector generation
 h = 0.001;         % time step
+sln.h = h;
 tmax = 2;          % max time that we allow for a single step
 t0 = 0;
 tspan = t0:h:tmax; % from 0 to tmax with time step h

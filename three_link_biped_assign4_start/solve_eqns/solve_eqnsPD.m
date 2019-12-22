@@ -7,17 +7,11 @@
 % As an example you can use q0 = [pi/6; -pi/3; 0] and dq0 = [0;0;0]. 
 
 function [sln, xhip_abs] = solve_eqnsPD(q0, dq0, num_steps, Kp, Kd,  q_des_torso, spread)
-global u_vect;
-u_vect = [];
-global t_vect;
-t_vect = [];
-global dq_vect;
-dq_vect = [];
-
 
 r0 = zeros(num_steps+1,1);
 xhip_abs = zeros(num_steps+1,1);
 h = 0.001; % time step
+sln.h = h;
 tmax = 2; % max time that we allow for a single step
 t0 = 0;
 tspan = t0:h:tmax; % from 0 to tmax with time step h

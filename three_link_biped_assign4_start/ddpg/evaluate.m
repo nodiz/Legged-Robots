@@ -1,12 +1,14 @@
 %% Params
 
 saveVideo = 0;
-nsteps = 500;
+nsteps = 500; % steps is simulation steps, not robot steps !
 
 %% Running simulation
 
 simOpts = rlSimulationOptions('MaxSteps',nsteps);
 experience = sim(env,saved_agent,simOpts);
+
+% If error, you need to run the first cell in env_setup;
 
 if saveVideo
     videoName = ['videos/', 't', '.avi'];

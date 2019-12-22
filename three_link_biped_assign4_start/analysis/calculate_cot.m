@@ -1,12 +1,11 @@
-function [cot, mean_cot] = calculate_cot(sln, h, start_step)
+function [cot, mean_cot] = calculate_cot(sln, start_step)
 %COT calculate COT for everystep step
 
-if nargin < 2
-    h = 0.001;
-    start_step = 5;
-elseif nargin < 3
+if nargin < 3
     start_step = 5;
 end
+
+h = sln.h;
 
 num_steps = size(sln.T,2);
 COT_vect = zeros(1,num_steps);

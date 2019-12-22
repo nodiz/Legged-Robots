@@ -1,4 +1,4 @@
-function analyze(sln)
+function analyze(sln, stableSteps, showSteps, name)
 %--------------------------------------------------------------------------
 %   analyze : plot graph to analyze a given solution
 %
@@ -8,11 +8,19 @@ function analyze(sln)
 %       o -
 %--------------------------------------------------------------------------
 
-h = 0.001;
-
 % Initialize parameters
 [q0, ~, ~, ~, ~] = control_hyper_parameters();
 num_steps = length(sln.TE);
+
+if nargin > 2
+    firstStep = stableSteps;
+    lastStep = max(firstStep+showSteps,num_steps);
+else
+    firstStep = 1;
+    lastStep = num_steps;
+end
+
+saveFigures = (nargin == 4);
 
 % Initialize postion table
 xhip_abs = zeros(num_steps+1,1);
@@ -38,7 +46,7 @@ end
 % Plot angles vs time
 states = cell2mat((sln.Y)');
 time = cell2mat((sln.T)');
-figure()
+figure(1)
 plot(time, states(:, 1), 'red.')
 hold on
 plot(time, states(:, 2), 'blue.')
@@ -89,7 +97,7 @@ plot(x_diff./t_diff, 'b+', 'linewidth', 2)
 %% Cost of Transport
     % use Matlab function: trapz to compute integrals
     
-[cot, mean_cot] = calculate_cot(sln, h, 5);
+[cot, mean_cot] = calculate_cot(sln, stableSteps);
 
 figure()
 plot(cot);
