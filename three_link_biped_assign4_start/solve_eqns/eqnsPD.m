@@ -25,7 +25,7 @@ u = controlPD(q, dq, Kp, Kd,  q_des_torso, spread);
 u = add_noise(u, q, step_n);
 
 % Intialize dy and download system matrix
-dy = zeros(n, 1);
+dy = zeros(6, 1);
 M = eval_M(q);
 G = eval_G(q);
 C = eval_C(q,dq);

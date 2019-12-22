@@ -1,4 +1,4 @@
-function dy = eqnsVMC(t, y, k, C,  q_des_torso, x_des, vTarget, step_number)
+function dy = eqnsVMC(t, y, k, C,  q_des_torso, x_des, v_target, step_number)
 %--------------------------------------------------------------------------
 %   eqnsVMC : compute the variation in y : dy and ddy (for VMC)
 %
@@ -21,11 +21,11 @@ q = y(1:3);
 dq = y(4:6);
 
 % Apply the control and the noise
-u = controlVMC(q,dq, k, C, q_des_torso, x_des, vTarget);
+u = control(q,dq, k, C, q_des_torso, x_des, v_target);
 u = add_noise(u, q, step_number);
 
 % Intialize dy and download system matrix
-dy = zeros(n, 1);
+dy = zeros(6, 1);
 M = eval_M(q);
 G = eval_G(q);
 C = eval_C(q,dq);

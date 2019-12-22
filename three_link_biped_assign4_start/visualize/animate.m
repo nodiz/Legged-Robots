@@ -41,7 +41,7 @@ for j = firstStep:lastStep
             F = getframe(gcf) ;
             writeVideo(writerObj, F);
         else
-            pause(h)
+            pause(sln.h)
         end
         
         % visualize :

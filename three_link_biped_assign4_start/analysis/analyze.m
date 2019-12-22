@@ -12,17 +12,10 @@ function meanValues = analyze(sln, stableSteps, showSteps, name)
 [q0, ~, ~, ~, ~] = control_hyper_parameters();
 num_steps = length(sln.TE);
 
-if nargin > 2
-    firstStep = stableSteps;
-    lastStep = min(firstStep+showSteps-1,num_steps);
-    expandedLastStep = min(firstStep+showSteps*2-1,num_steps);
-else
-    firstStep = 1;
-    lastStep = num_steps;
-    expandedLastStep = num_steps;
-end
-
-saveFigures = (nargin == 4);
+%Extract matrix containing states, time and torques
+states = cell2mat((sln.Y)');
+time = cell2mat((sln.T)');
+torques = cell2mat((sln.U)');
 
 % Initialize postion table
 xhip_abs = zeros(num_steps+1,1);
@@ -30,7 +23,7 @@ xhip0 = kin_hip(q0);
 xhip_abs(1) = xhip0;
 r0 = zeros(num_steps+1,1); 
 
-% Fill position table 
+% Fill position tableï¿½
 for i = 1:num_steps
     [x_swf,  ~, ~, ~] = kin_swf(sln.YE{i}(1:3), sln.YE{i}(4:6));
     [x_hip] = kin_hip(sln.YE{i}(1:3)');
@@ -39,11 +32,12 @@ for i = 1:num_steps
     xhip_abs(i+1) = r0(i) + x_hip;
 end
 
-interTE = cat(1,sln.TE{firstStep:lastStep});
-interT = cat(1,sln.T{firstStep:lastStep});
-interY = cat(1,sln.Y{firstStep:lastStep});
-interYE = cat(1,sln.YE{firstStep:lastStep});
-interU = cat(1,sln.U{firstStep:lastStep});
+%plot torques vs Time
+figure()
+hold on
+plot(time, torques(1,:), 'blue.')
+title('Torques vs time')
+plot(time, torques(2, :), 'red.')
 
 % Plot torques 
 
@@ -60,12 +54,8 @@ if saveFigures
 end
 
 % Plot angles vs time
-
-states = cell2mat((sln.Y)');
-
-figure(2)
-
-plot(interT, interY(:, 1), 'red', 'Linewidth', 2)
+figure()
+plot(time, states(:, 1), 'red.')
 hold on
 plot(interT, interY(:, 2), 'blue', 'Linewidth', 2)
 plot(interT, interY(:, 3), 'green', 'Linewidth', 2)

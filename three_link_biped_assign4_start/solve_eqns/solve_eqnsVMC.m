@@ -1,6 +1,6 @@
 function [sln, xhip_abs] = solve_eqnsVMC(q0, dq0, num_steps, k, C, ...
-                                         q_des_torso, x_des, vTarget)
-%-------------------------------------------------------------------------
+                                         q_des_torso, x_des, v_target)
+%--------------------------------------------------------------------------
 %   solve_eqnsVMC : solve the motion equation system for a VMC
 % Note: eqns.m defines the equations of motion to be solved by this script
 % This function returns the time vector T, the solution Y, the event time
@@ -49,7 +49,7 @@ for i = 1:num_steps
     
 	% compute the ode45 solution
 	[T, Y, TE, YE] = ode45(@(t,y) eqnsVMC(t, y, k, C,  q_des_torso, ....
-                                          x_des, vTarget, i),tspan,y0,opts);
+                                          x_des, v_target, i),tspan,y0,opts);
 	sln.T{i} = T;
 	sln.Y{i} = Y;
 	sln.TE{i} = TE;
