@@ -13,6 +13,7 @@ slowVideo = 1; % to make video is slower then reality (not used now)
 
 if saveVideo
     videoName = ['videos/', name, '.avi']; % video folder needs to exist
+    videoName = join(videoName, "");
     writerObj = VideoWriter(videoName);
     writerObj.FrameRate = (1 / sln.h)/(skip*slowVideo); %/ skipInVideo;
     open(writerObj);
