@@ -13,7 +13,7 @@ boolSaveVideo = and(or(boolAnimate, boolAnalyze), 1); % save video/figures after
 boolSaveStabil = and(and(boolAnimate, boolSaveVideo), 1);
 
 control = 'PD'; %'PD' or 'VMC' or 'DDPG'
-speed = 3;      % 1 to 9: 1 is the slowest gait, 9 the fastest. (reuired for PD, VMC)
+speed = 1;      % 1 to 9: 1 is the slowest gait, 9 the fastest. (reuired for PD, VMC)
 
 numSteps = 30;  % how many steps to simulate
 stableSteps = 10; % after how many steps we suppose the system to be stable
@@ -28,6 +28,8 @@ switch control
         load('control_params_PD.mat', 'control_params');
         x = control_params(speed,:);
         sln = solve_eqnsPD(q0, dq0, numSteps, x(1:2), x(3:4),  x(5), x(6));
+        animate(sln);
+        disp(x);
     case 'VMC'
         load('control_params_VMC.mat', 'control_params');
         x = control_params(speed,:);

@@ -8,6 +8,7 @@ function meanValues = analyze(sln, stableSteps, showSteps, name)
 %       o -
 %--------------------------------------------------------------------------
 
+
 % Initialize parameters
 [q0, ~, ~, ~, ~] = control_hyper_parameters();
 num_steps = length(sln.TE);
@@ -53,6 +54,8 @@ plot(interT, interU(:,1), 'blue')
 title('Torques vs time')
 plot(interT, interU(:,2), 'red')
 legend('u1','u2');
+xlabel('Time [s]');
+ylabel('Torque [Nm]');
 
 if saveFigures
     fileName = ['fig/', name, '_torques', '.png'];
@@ -72,6 +75,9 @@ plot(interT, interY(:, 2), 'blue', 'Linewidth', 2)
 plot(interT, interY(:, 3), 'green', 'Linewidth', 2)
 title('Angles vs time')
 legend('q1','q2', 'q3')
+xlabel('Time [s]');
+ylabel('Angle [rad]');
+
 
 if saveFigures
     fileName = ['fig/', name, '_q', '.png'];
@@ -91,22 +97,28 @@ subplot(3,1,1)
 
 plot(interT, z_h , 'blue');
 title('Hip height vs step number')
+ylabel('Hip height [m]');
+xlabel('Step number [-]');
 
 % Plot hip displacement vs step number
 
 subplot(3,1,2)
 
 step_n_plus = firstStep:expandedLastStep;
-
+ytickformat('%.2f')
 
 plot(step_n_plus, diff(xhip_abs(firstStep:expandedLastStep+1)), 'blue')
 hold on 
 plot(step_n_plus, diff(xhip_abs(firstStep:expandedLastStep+1)), 'blue+', 'linewidth', 2)
 title('Hip displacement vs step number')
+ylabel('Hip displacement [m]');
+xlabel('Step number [-]');
 
 subplot(3,1,3)
 plot(interT, dx_h, 'blue')
 title('Hip speed vs time')
+ylabel('Hip speed [m/s]');
+xlabel('Time [s]');
 if saveFigures
     fileName = ['fig/', name, '_hip', '.png'];
     fileName = join(fileName, "");
@@ -126,6 +138,8 @@ plot(states(:, 2), states(:, 5), 'blue.')
 plot(states(:, 3), states(:, 6), 'green.')
 title('dq vs q, all ');
 legend('q1','q2','q3');
+xlabel('q [rad]');
+ylabel('dq [rad/s]');
 
 subplot(2,1,2); 
 plot(interY(:, 1), interY(:, 4), 'red.')
@@ -139,6 +153,8 @@ plot(interYE(:, 2), interYE(:, 5), 'blue+', 'linewidth', 3)
 plot(interYE(:, 3), interYE(:, 6), 'green+', 'linewidth', 3)
 title('dq vs q, stable');
 legend('q1','q2','q3', 'q1Event', 'q2Event', 'q3Event');
+xlabel('q [rad]');
+ylabel('dq [rad/s]');
 
 if saveFigures
     fileName = ['fig/', name, '_qdq', '.png'];
@@ -155,11 +171,13 @@ time_steps = [0;cell2mat((sln.TE)')];
 t_diff = diff(time_steps);
 plot(t_diff)
 mean_freq = mean(t_diff(firstStep:end));
-titleF = ['Frequency over step: mean(', num2str(mean_freq),')'];
+titleF = ['Frequency over step: mean(', num2str(mean_freq),' [1/s])'];
 title(titleF);
 hold on; 
 plot(t_diff, 'b+', 'linewidth', 2)
 disp(['Mean Freq [m/s] = ', num2str(mean_freq)])
+xlabel('Step number [-]');
+ylabel('Frequency [1/s]');
 
 %% Step length
 
@@ -167,11 +185,13 @@ subplot(4,1,2)
 stepL = diff(xhip_abs);
 plot(stepL)
 mean_length = mean(stepL(firstStep:end));
-titleF = ['Stride over step: mean(', num2str(mean_length),')'];
+titleF = ['Stride over step: mean(', num2str(mean_length),' [m])'];
 title(titleF);
 hold on; 
 plot(stepL, 'b+', 'linewidth', 2)
 disp(['Mean length [m/s] = ', num2str(mean_length)])
+xlabel('Step number [-]');
+ylabel('Stride [m]');
 %% Speed
 
 subplot(4,1,3)
@@ -181,12 +201,13 @@ x_diff = diff(xhip_abs);
 speed_vect = x_diff./t_diff;
 plot(speed_vect)
 mean_speed = mean(speed_vect(firstStep:end));
-titleF = ['Speed over step: mean(', num2str(mean_speed),')'];
+titleF = ['Speed over step: mean(', num2str(mean_speed),' [m/s])'];
 title(titleF);
 hold on; 
 plot(speed_vect, 'b+', 'linewidth', 2)
 disp(['Mean Speed [m/s] = ', num2str(mean_speed)])
-
+xlabel('Step number [-]');
+ylabel('Speed [m/s]');
 
 %% Cost of Transport
     % use Matlab function: trapz to compute integrals
@@ -197,9 +218,11 @@ subplot(4,1,4)
 plot(cot, 'b');
 hold on
 plot(cot, 'b+', 'linewidth', 2);
-titleF = ['Cot over steps: mean(', num2str(mean_cot),')'];
+titleF = ['Cot over steps: mean(', num2str(mean_cot),' [J/m])'];
 title(titleF);
 disp(['Cost of Transport [J/m] = ', num2str(mean_cot)])
+xlabel('Step number [-]');
+ylabel('CoT [J/m]');
 if saveFigures
     fileName = ['fig/', name, '_speed-cot', '.png'];
     fileName = join(fileName, "");
