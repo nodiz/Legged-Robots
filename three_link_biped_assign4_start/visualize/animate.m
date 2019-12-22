@@ -6,6 +6,7 @@
 function animate(sln, stableSteps, showSteps, name)
 
 saveVideo = (nargin == 4);
+h = sln.h;
 
 skip = 5;
 slowVideo = 1; % to make video is slower then reality (not used now)
@@ -27,7 +28,7 @@ else
     lastStep = num_steps;
 end
 
-figure();
+figure;
 r0 = [0; 0];
 tic();
 for j = firstStep:lastStep

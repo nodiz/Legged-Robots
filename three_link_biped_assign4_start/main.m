@@ -17,7 +17,7 @@ speed = 3;      % 1 to 9: 1 is the slowest gait, 9 the fastest. (reuired for PD,
 
 numSteps = 30;  % how many steps to simulate
 stableSteps = 10; % after how many steps we suppose the system to be stable
-showSteps = 10; % how many steps we want to show (video, analysis)
+showSteps = 5; % how many steps we want to show (video, analysis)
 if boolSaveVideo
     name = [control, '_', num2str(speed)]; % name for video saving
 end
