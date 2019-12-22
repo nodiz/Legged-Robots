@@ -56,6 +56,7 @@ legend('u1','u2');
 
 if saveFigures
     fileName = ['fig/', name, '_torques', '.png'];
+    fileName = join(fileName, "");
     saveas(gcf,fileName)
 end
 
@@ -74,6 +75,7 @@ legend('q1','q2', 'q3')
 
 if saveFigures
     fileName = ['fig/', name, '_q', '.png'];
+    fileName = join(fileName, "");
     saveas(gcf,fileName)
 end
 
@@ -107,6 +109,7 @@ plot(interT, dx_h, 'blue')
 title('Hip speed vs time')
 if saveFigures
     fileName = ['fig/', name, '_hip', '.png'];
+    fileName = join(fileName, "");
     saveas(gcf,fileName)
 end
 
@@ -139,6 +142,7 @@ legend('q1','q2','q3', 'q1Event', 'q2Event', 'q3Event');
 
 if saveFigures
     fileName = ['fig/', name, '_qdq', '.png'];
+    fileName = join(fileName, "");
     saveas(gcf,fileName)
 end
 %% Step frequency
@@ -198,6 +202,7 @@ title(titleF);
 disp(['Cost of Transport [J/m] = ', num2str(mean_cot)])
 if saveFigures
     fileName = ['fig/', name, '_speed-cot', '.png'];
+    fileName = join(fileName, "");
     saveas(gcf,fileName)
 end
  
@@ -208,6 +213,6 @@ meanValues.cot = mean_cot;
 meanValues.speed = mean_speed;
 meanValues.length = mean_length;
 meanValues.freq = mean_freq;
-meanValues.name = name; 
+meanValues.name = join(name, "");
 
 end

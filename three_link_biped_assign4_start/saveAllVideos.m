@@ -12,7 +12,7 @@ boolAnalyze = 0;   % show analysis after simulation
 boolSaveVideo = and(boolAnimate, 1); % save video after simulation
 boolSaveStabil = and(and(boolAnimate, boolSaveVideo), 1);
 
-for control = ['PD', 'VMC']
+for control = ["PD", "VMC"]
     for speed = 1:9
 
         numSteps = 30;  % how many steps to simulate
@@ -25,22 +25,22 @@ for control = ['PD', 'VMC']
         [q0, dq0, ~, ~, ~] = control_hyper_parameters();
 
         switch control
-            case 'PD'
+            case "PD"
                 load('control_params_PD.mat', 'control_params');
                 x = control_params(speed,:);
                 sln = solve_eqnsPD(q0, dq0, numSteps, x(1:2), x(3:4),  x(5), x(6));
-            case 'VMC'
+            case "VMC"
                 load('control_params_VMC.mat', 'control_params');
                 x = control_params(speed,:);
                 sln = solve_eqnsVMC(q0, dq0, numSteps, x(1:3), x(4:6),  x(7), x(8), x(9));
-            case 'DDPG'
+            case "DDPG"
                 disp('No DDPG implemented');
 
         end
 
         if boolAnimate
             if boolSaveVideo
-                animate(sln, stableSteps, showSteps, name);
+%                 animate(sln, stableSteps, showSteps, name);
                 if boolSaveStabil
                     animate(sln, 1, 5, ['start_', name]);
                 end
