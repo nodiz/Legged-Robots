@@ -7,7 +7,7 @@ n = 6;
 q = y(1:n/2);
 dq = y(n/2+1:n);
 %u = control(q,dq, k, C, q_des_torso);
-u = evaluatePolicyCool([q;dq;0;0])';
+u = evaluateCurrentPolicy([q;dq;0;0])';
 %u = add_noise(u, q, step_n);
 
 dy = zeros(n, 1);

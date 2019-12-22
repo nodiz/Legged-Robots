@@ -16,7 +16,7 @@ for j = 1:num_steps
     [N, ~] = size(Y);
     for i = 1:skip:N % what does skip do?
         q = Y(i,1:3);
-        pause(0.02);  % pause for 2 mili-seconds
+        pause(0.001);  % pause for 2 mili-seconds
         % visualize :
         visualize(q, r0);
         hold off
@@ -25,9 +25,6 @@ for j = 1:num_steps
     
     [x_swf,z_swf,~,~]= kin_swf(sln.YE{j}(1:3), sln.YE{j}(4:6)); %% À vérifier;
     r0 = r0 + [x_swf;0];
-
-   
-    
 end
 t_anim = toc();
 

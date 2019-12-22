@@ -47,9 +47,9 @@ for i = 1:num_steps
    sln.TE{i} = TE;
    sln.YE{i} = YE;
    
-   for i2 = 1:length(T)
-        sln.U{i}(i2, 1:2) = 
-   end
+    for i2 = 1:length(T)
+    	sln.U{i}(i2,1:2) = evaluateCurrentPolicy([Y(i2,1:3);Y(i2,4:6);0;0]);
+    end
    
    if T(end) == tmax
          break

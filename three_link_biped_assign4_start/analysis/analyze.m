@@ -8,12 +8,7 @@ function analyze(sln)
 %       o -
 %--------------------------------------------------------------------------
 
-
-
-% Use the global vecotrs
-global u_vect  % command vector
-global t_vect  % time vector
-global dq_vect % difference of angle vector
+h = 0.001;
 
 % Initialize parameters
 [q0, ~, ~, ~, ~] = control_hyper_parameters();
@@ -21,13 +16,11 @@ num_steps = length(sln.TE);
 
 % Initialize postion table
 xhip_abs = zeros(num_steps+1,1);
-r0 = zeros(num_steps+1,1);
 xhip0 = kin_hip(q0);
 xhip_abs(1) = xhip0;
-r0 = zeros(num_steps+1,1);
-vStep = zeros(num_steps,1);
+r0 = zeros(num_steps+1,1); 
 
-% Fill position table
+% Fill position table 
 for i = 1:num_steps
     [x_swf,  ~, ~, ~] = kin_swf(sln.YE{i}(1:3), sln.YE{i}(4:6));
     [x_hip] = kin_hip(sln.YE{i}(1:3)');
@@ -87,8 +80,8 @@ title('z_coordinate vs step number')
 figure()
 t_diff = diff(time_steps);
 x_diff = diff(xhip_abs);
-
 plot(x_diff./t_diff)
+title('Speed over step');
 hold on; 
 plot(x_diff./t_diff, 'b+', 'linewidth', 2)
 
@@ -96,26 +89,13 @@ plot(x_diff./t_diff, 'b+', 'linewidth', 2)
 %% Cost of Transport
     % use Matlab function: trapz to compute integrals
     
-% j = 1;
-% first_stable_step = 3;
-% for i = first_stable_step:num_steps
-%     max_1 = 0;
-%     max_2 = 0;
-%     for t = 1:length(sln.T{i})   
-%         max_1(t) = max([0, u_vect(i,1) * (sln.Y{i}(t,4) - sln.Y{i}(t,6))]);
-%         max_2(t) = max([0, u2{i}(t,1) * (sln.Y{i}(t,5) - sln.Y{i}(t,6))]);
-%     end
-%     COT_vect(j) = (trapz(sln.T{i}', max_1) + trapz(sln.T{i}', max_2))/...
-%                     (hip.x{i}(end,1) - hip.x{i}(1,1));
-%     j = j + 1;
-% end
-% 
-% COT = mean(COT_vect);
-% disp(['Cost of Transport [J/m] = ', num2str(COT)]);
-% 
-% cost1 = max(0, u_vect(1, :).*(dq_vect(1, :)-dq_vect(3, :)));
-% cost2 = max(0, u_vect(2, :).*(dq_vect(2, :)-dq_vect(3, :)));
-% CoT = (sum(cost1) + sum(cost2))/(xhip_abs(end)-xhip_abs(1))
+[cot, mean_cot] = calculate_cot(sln, h, 5);
+
+figure()
+plot(cot);
+title('COT');
+disp(['Cost of Transport [J/m] = ', num2str(mean_cot)])
+    
 
 
 end
