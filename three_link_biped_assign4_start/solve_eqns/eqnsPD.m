@@ -14,8 +14,6 @@ function dy = eqnsPD(t, y, Kp, Kd,  q_des_torso, spread, step_n)
 %       o dy           : variation of y : dy and ddy
 %--------------------------------------------------------------------------
 
-n = 6;
-
 % Extract q and dq
 q = y(1:3);
 dq = y(4:6);

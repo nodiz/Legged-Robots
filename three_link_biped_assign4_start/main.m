@@ -3,7 +3,8 @@
 %--------------------------------------------------------------------------
 clc
 clear all
-%PATH
+
+% set path
 addpath('./kinematics', './control', './dynamics', './set_parameters/', ...
         './solve_eqns/', './visualize', './analysis', './optimization/')
 

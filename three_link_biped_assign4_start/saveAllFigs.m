@@ -1,5 +1,7 @@
 %--------------------------------------------------------------------------
-%   main : main of the program, call it to see our results
+%   saveAllFigs : solve the system for VMC and PD controller and for the
+%                 desired set of input speed then plot all the intersting
+%                 graphs for the analyze
 %--------------------------------------------------------------------------
 
 close all

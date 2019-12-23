@@ -1,3 +1,9 @@
+%--------------------------------------------------------------------------
+%   opti_part : Stock and plot the comparison between all the results of
+%               the PD and VMC controller. Add more plot if you want
+%--------------------------------------------------------------------------
+
+% Load and init
 load('analyzePD-VMC.mat')
 
 CoT_PD = zeros(1,9);
@@ -12,6 +18,7 @@ length_VMC = zeros(1,9);
 freq_PD = zeros(1,9);
 freq_VMC = zeros(1,9);
 
+% Store data in vectors
 for i = 1:9
     CoT_PD(i) = analyzeArray{1,i}.cot;
     CoT_VMC(i) = analyzeArray{1,9+i}.cot;
@@ -23,6 +30,7 @@ for i = 1:9
     freq_VMC(i) = analyzeArray{1,9+i}.freq;
 end
 
+% Print CoT vs Speed
 figure
 hold on
 scatter(speed_PD,CoT_PD, 'blue', 'x')
@@ -34,6 +42,7 @@ xlabel('Speed [m/s]');
 ylabel('CoT [-]');
 title('CoT vs Speed');
 
+% Print CoT vs Length
 figure
 hold on
 scatter(length_PD,CoT_PD, 'blue', 'x')
@@ -43,6 +52,7 @@ xlabel('Length [m]');
 ylabel('CoT [-]');
 title('CoT vs length');
 
+% Print CoT vs Frequency
 figure
 hold on
 scatter(freq_PD,CoT_PD, 'blue', 'x')

@@ -1,14 +1,17 @@
-function [x, dxm] = fast_kinHip(q1,dq1,  h, tStart, tFin)
-%FAST_KINHIP Summary of this function goes here
-%   Detailed explanation goes here
-    l = 0.5;
+function [x, dxm] = fast_kinHip(q1,dq1,  h, tStart, tEnd)
+%--------------------------------------------------------------------------
+%   fast_kinHip : compute the x position of the hip and his x velocity
+%--------------------------------------------------------------------------
+
+    [~, ~, ~, l, ~, ~, ~] = set_parameters();
+    
     if nargin == 3
         x = h * l * sum(dq1(:).*cos(q1(:)));
     elseif nargin > 2
         xStabilize = h * l * sum(dq1(1:tStart).*cos(q1(1:tStart)));
-        xStable = h * l * sum(dq1(tStart+1:tFin).*cos(q1(tStart+1:tFin)));
+        xStable = h * l * sum(dq1(tStart+1:tEnd).*cos(q1(tStart+1:tEnd)));
         x = xStabilize+xStable;
-        dxm = xStable / ((tFin - tStart)*h);
+        dxm = xStable / ((tEnd - tStart)*h);
     end
 end
 

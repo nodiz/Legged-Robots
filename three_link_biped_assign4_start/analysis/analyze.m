@@ -31,7 +31,7 @@ xhip0 = kin_hip(q0);
 xhip_abs(1) = xhip0; 
 r0 = zeros(num_steps+1,1);  
  
-% Fill position table? 
+% Fill position table 
 for i = 1:num_steps 
     [x_swf,  ~, ~, ~] = kin_swf(sln.YE{i}(1:3), sln.YE{i}(4:6)); 
     [x_hip] = kin_hip(sln.YE{i}(1:3)'); 

@@ -1,5 +1,7 @@
 %--------------------------------------------------------------------------
-%   main : main of the program, call it to see our results
+%   saveAllVideos : solve and animate all the solution for all type of PD
+%                  and VMC controller and save the results as videos (.avi)
+%                   
 %--------------------------------------------------------------------------
 
 close all
