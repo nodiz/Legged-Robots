@@ -45,8 +45,6 @@ switch control
         load('control_params_PD.mat', 'control_params');
         x = control_params(speed,:);
         sln = solve_eqnsPD(q0, dq0, numSteps, x(1:2), x(3:4),  x(5), x(6));
-        animate(sln);
-        disp(x);
     case 'VMC'
        load('control_params_VMC.mat', 'control_params');
        x = control_params(speed,:);

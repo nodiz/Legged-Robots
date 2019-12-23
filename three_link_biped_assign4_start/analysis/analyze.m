@@ -8,7 +8,16 @@ function meanValues = analyze(sln, stableSteps, showSteps, name)
 %       o - 
 %-------------------------------------------------------------------------- 
  
- 
+if nargin ~= 4
+    if nargin == 1
+        stableSteps = 1;
+        showSteps = 30;
+        name = '-';
+    else 
+        disp('Analyze can be call with 1 or 4 parameters');
+    end
+end
+
 % Initialize parameters 
 [q0, ~, ~, ~, ~] = control_hyper_parameters(); 
 num_steps = length(sln.TE); 
