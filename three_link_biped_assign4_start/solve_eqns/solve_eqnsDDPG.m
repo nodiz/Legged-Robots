@@ -18,7 +18,7 @@ r0 = zeros(num_steps+1,1);
 xhip_abs = zeros(num_steps+1,1);
 
 h = 0.001; % time step
-
+sln.h = h;
 tmax = 2; % max time that we allow for a single step
 t0 = 0;
 tspan = t0:h:tmax; % from 0 to tmax with time step h
@@ -41,14 +41,14 @@ sln.YE = {};
 
 for i = 1:num_steps
     
-   [T, Y, TE, YE] = ode45(@(t,y) eqnsDDPG(t, y),tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
+   [T, Y, TE, YE] = ode45(@(t,y) eqnsDDPG(t, y, i),tspan,y0,opts);% use ode45 to solve the equations of motion (eqns.m)
    sln.T{i} = T;
    sln.Y{i} = Y;
    sln.TE{i} = TE;
    sln.YE{i} = YE;
    
     for i2 = 1:length(T)
-    	sln.U{i}(i2,1:2) = evaluateCurrentPolicy([Y(i2,1:3);Y(i2,4:6);0;0]);
+    	sln.U{i}(i2,1:2) = evaluateCurrentPolicy([Y(i2,1:3)';Y(i2,4:6)';0;0]);
     end
    
    if T(end) == tmax

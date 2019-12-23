@@ -221,7 +221,7 @@ ylabel('Speed [m/s]');
 %% Cost of Transport 
     % use Matlab function: trapz to compute integrals 
      
-[cot, mean_cot] = calculate_cot(sln, stableSteps); 
+[cot, mean_cot] = calculate_cot(sln, stableSteps) 
  
 subplot(4,1,4) 
 plot(cot, 'b'); 

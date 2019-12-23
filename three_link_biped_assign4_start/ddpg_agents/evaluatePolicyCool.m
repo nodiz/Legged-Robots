@@ -1,4 +1,4 @@
-function action1 = evaluatePolicyCool(observation1)
+function action1 = evaluateCurrentPolicy(observation1)
 %#codegen
 
 % Reinforcement Learning Toolbox

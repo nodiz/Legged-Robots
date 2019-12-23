@@ -6,7 +6,7 @@
 function animate(sln, stableSteps, showSteps, name)
 
 saveVideo = (nargin == 4);
-h = sln.h;
+
 
 skip = 5;
 slowVideo = 1; % to make video is slower then reality (not used now)

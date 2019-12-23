@@ -21,7 +21,7 @@ q = y(1:3);
 dq = y(4:6);
 
 % Apply the control and the noise
-u = control(q,dq, k, C, q_des_torso, x_des, v_target);
+u = controlVMC(q,dq, k, C, q_des_torso, x_des, v_target);
 u = add_noise(u, q, step_number);
 
 % Intialize dy and download system matrix

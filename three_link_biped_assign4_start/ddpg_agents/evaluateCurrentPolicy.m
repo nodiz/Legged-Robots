@@ -1,4 +1,4 @@
-function action1 = evaluatePolicy(observation1)
+function action1 = evaluateCurrentPolicy(observation1)
 %#codegen
 
 % Reinforcement Learning Toolbox
@@ -10,7 +10,8 @@ end
 function action1 = localEvaluate(observation1)
 persistent policy
 if isempty(policy)
-	policy = coder.loadDeepLearningNetwork('coolAgent.mat','policy');
+    disp("load agent")
+	policy = coder.loadDeepLearningNetwork('fastAgent.mat','policy');
 end
 action1 = predict(policy,observation1);
 end

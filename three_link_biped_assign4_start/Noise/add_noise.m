@@ -9,37 +9,25 @@ function u_noise = add_noise(u, q, step_number)
 %   outputs:
 %       o u_noise     : control output with noise added
 %--------------------------------------------------------------------------
-    persistent NoiseType;
-    persistent SNR;
-    persistent Bias;
+    persistent NoiseBool;
     persistent F_hip;
-    if isempty(NoiseType)
+    if isempty(NoiseBool)
         load('param_noise.mat', 'param_noise');
-        NoiseType = param_noise(1);
-        SNR       = param_noise(2);
-        Bias      = param_noise(3);
-        F_hip     = param_noise(4);
+        NoiseBool = param_noise(1);
+        F_hip     = param_noise(2);
     end
   
     
-    NSTEP_STABILIZATION = 2;
+    NSTEP_STABILIZATION = 2; % number of steps after which perturbation is applied
     [~, ~, ~, l1, ~, ~, ~] = set_parameters();
-     B = eval_B();
+    B = eval_B();
     
     
-    switch NoiseType
+    switch NoiseBool
         case 0
-            u_noise = u;       
+            u_noise = u;    
+            
         case 1
-           if step_number > NSTEP_STABILIZATION 
-           % Transform the noise force to noise torque
-           u_noise = awgn(u, SNR) + Bias;  % Transform and add the noise torque 
-                               % to noise control                               
-           else
-                u_noise = u;
-           end
-           
-        case 2
             J = [-l1*cos(q(1)), 0, 0];
 
             % we don't want to put noise before stabilization
