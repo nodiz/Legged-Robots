@@ -10,7 +10,7 @@ addpath('./kinematics', './control', './dynamics', './set_parameters/', ...
 
 % --------- PARAMETERS TO CHOOSE ---------
 
-control     = 'DDPG'; %'PD' or 'VMC' or 'DDPG'
+control     = 'PD'; %'PD' or 'VMC' or 'DDPG'
 speed       = 9;      %1 to 9: 1 is the slowest gait, 9 the fastest. //Not for DDPG (only fastest agent available)
 numSteps    = 30;  % how many steps to simulate
 
