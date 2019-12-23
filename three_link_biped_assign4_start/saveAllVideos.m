@@ -20,10 +20,11 @@ for control = ["PD", "VMC"]
         showSteps = 20; % how many steps we want to show (video, analysis)
 
         if boolSaveVideo
-            name = [control, '_', num2str(speed)]; % name for video saving
+            name = strcat(control, '_', num2str(speed)); % name for video saving
+            disp(name)
         end
         [q0, dq0, ~, ~, ~] = control_hyper_parameters();
-
+        
         switch control
             case "PD"
                 load('control_params_PD.mat', 'control_params');
@@ -42,7 +43,7 @@ for control = ["PD", "VMC"]
             if boolSaveVideo
 %                 animate(sln, stableSteps, showSteps, name);
                 if boolSaveStabil
-                    animate(sln, 1, 5, ['start_', name]);
+                    animate(sln, 1, 5, strcat('start_', name));
                 end
             else
                 animate(sln, stableSteps, showSteps);
