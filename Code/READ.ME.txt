@@ -1,0 +1,33 @@
+     //////////////////////////////
+    /// LEGGED ROBOTS : READ ME //
+   //////////////////////////////
+
+/// Abstract ///
+
+The aim of this project is to model a biped robot and control it.
+The different attached files provides all the files to achieve such goal. 
+
+/// Enjoy the results ///
+
+- Open : main.m
+
+- Choose the controller and his reliability :
+   - controller : set control at 'PD', 'VMC' or 'DDPG'
+   - target speed : set speed at 1 to 9 (1 is the slowest gait, 9 the fastest)
+   - noise : 
+      - type : set NoiseType at 0 for no noise, 1 for noise on torques and 2 for a noise force on the hip
+         - If type 1 selected :
+            - Signal to Noise Ratio: set SNR to the desired value (white gaussian noise)
+            - Bias : set the bias to the desired value (mean of the noise)
+         - If type 2 selected :
+            - F_hip : choose the intensity of the force to be applied [N]
+         - If type 1 or 2 selected :
+            - Activation of the noise : set stableSteps to the step number from which you want the noise to be activated (default = 1)
+
+- Choose the display settings :
+   - video : set boolAnimate to 1 if you want to see the video after the simulation, else to 0
+   - analysis : set boolAnalyze if you want to some analysis graphs of the simulation, else to 0
+   - length of the simulation : set numSteps to the number of biped's step that you want to be simulated (default = 30)
+   - length of the video : set showSteps to the number of biped's step that you want to see in the video (default = 30)
+
+- Enjoy ! The code will load the parameters needed for the controller and the velocity that you selected, then solve the equation and in function of your choice display the video of the displacement and the graphs for analyze.
